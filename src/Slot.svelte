@@ -2,10 +2,9 @@
 	export let id = -1
   export let shapes
   export let status
+  let filled = false
 
 	function handleDragDrop(e) {
-    console.log($$slots.shape)
-    console.log(e.target)
     e.preventDefault()
     const element_id = e
         .dataTransfer
@@ -15,16 +14,30 @@
     console.log(shapes)
     shapes = shapes //😕
     status = ("You dropped " + element_id + " into drop zone")
+    filled = true
   }
+
+  function handleDragOver(e) {
+    if (filled){
+      return true
+    }
+    console.log("dragover")
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+
+  }
+  //on:ondragover={handleDragOver}
+  //ondragover="return false"
 </script>
 
 <div
 	on:drop={handleDragDrop} 
+  on:dragover={handleDragOver}
+  
   id={'slot'+id}
   class="slot" 
-  ondragover={"return " + ($$slots.shape != undefined)}
 >
-  <slot name="shape"></slot>
+  <slot></slot>
 </div>
 
 <style>
