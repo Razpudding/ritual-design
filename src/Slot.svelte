@@ -1,8 +1,10 @@
 <script>
 	export let id = -1
   export let shapes
+  export let status
 
 	function handleDragDrop(e) {
+    console.log($$slots.shape)
     console.log(e.target)
     e.preventDefault()
     const element_id = e
@@ -20,9 +22,9 @@
 	on:drop={handleDragDrop} 
   id={'slot'+id}
   class="slot" 
-  ondragover="return false"
+  ondragover={"return " + ($$slots.shape != undefined)}
 >
-  <slot></slot>
+  <slot name="shape"></slot>
 </div>
 
 <style>

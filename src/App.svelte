@@ -26,11 +26,13 @@
 			<Slot
 				id={i}
 				bind:shapes={shapes}
+				bind:status={status}
 			>
 				{#if shapes.find(s => s.slot == i)}
 					<Shape 
+						bind:shapes={shapes}
 						text={'Draggable item' + shapes.find(s => s.slot == i).id}
-						class="shapes"
+						id={shapes.find(s => s.slot == i).id}
 					/>
 				{/if}
 			</Slot>
@@ -40,7 +42,6 @@
 		<Shape 
 			text={'Draggable item' + id}
 			{id}
-			class="shapes"
 		/>
 	{/each}
 </section>
@@ -52,13 +53,6 @@
 		font-size: 4em;
 		font-weight: 100;
 	}
-
-	.slot {
-    background-color: #eee;
-    border: #999 1px dashed ;
-    padding: 8px;
-    font-size: 19px;
-  }
 
   .slotsContainer {
   	display:grid;

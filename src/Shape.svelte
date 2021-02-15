@@ -1,6 +1,7 @@
 <script>
 	export let text = ''
 	export let id = -1
+	export let shapes = null
 
 	function dragstart(ev) {
   	// Add the target element's id to the data transfer object
@@ -8,10 +9,17 @@
   	ev.dataTransfer
        .setData("text", ev.target.getAttribute('id'));
 	}
+	function clickHandler(e) {
+		console.log(e.target)
+		shapes.find(shape => shape.id == e.target.id).slot = null
+		shapes = shapes
+		console.log(shapes)
+	}
 </script>
 
 <p
 	on:dragstart={dragstart} 
+	on:click={clickHandler}
 	draggable="true"
 	id = {id}
 	class='shapes'>{text}
