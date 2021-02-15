@@ -8,26 +8,15 @@
 	*/
 
 	import Shape from './Shape.svelte'
-	let menuShapeElement
+	import Slot from './Slot.svelte'
+
 	let shapes = [
 		{	type: 'rect', id: 0, slot: null },
 		{	type: 'rect', id: 1, slot: null },
 		{	type: 'rect', id: 2, slot: null }
 	]
-	let slots = [
-		{},{},{}
-	]
-	let dropped1 = []
-	let dropped2 = []
-	let dropped_in
+	let slots = new Array(shapes.length)
 	let status = 'Start dragging'
-
-  function dragstart(ev) {
-  	// Add the target element's id to the data transfer object
-  	console.log("draggiong", menuShapeElement)
-  	ev.dataTransfer
-       .setData("text", ev.target.getAttribute('id'));
-	}
 
 	function handleDragDrop(e) {
 		console.log(e.target)
@@ -38,9 +27,8 @@
 	  const slotId = e.target.id.split("slot")[1] //🤢
 	  shapes.find(shape => shape.id == element_id).slot = slotId
 	  console.log(slots, shapes)
-	  shapes = shapes //TODO: test if this is needed
-	  dropped_in = true;
-	  status = ("You droped " + element_id + " into drop zone")
+	  shapes = shapes //😕
+	  status = ("You dropped " + element_id + " into drop zone")
   }
 
   function handleDragEnter(e) {
@@ -56,37 +44,44 @@
         .getAttribute('id')
     console.log(status)
   }
-</script>
 
+  function dragstart(ev) {
+  	// Add the target element's id to the data transfer object
+  	console.log("draggiong",  ev.target.getAttribute('id'))
+  	ev.dataTransfer
+       .setData("text", ev.target.getAttribute('id'));
+	}
+</script>
 
 <section class='menu-left'>
 	<h1>{status}</h1>
 	<div class = slotsContainer>
 		{#each slots as slot, i}
 			<div 
-				on:dragenter={handleDragEnter} 
-				on:dragleave={handleDragLeave}  
 				on:drop={handleDragDrop} 
 				id={'slot'+i}
 				class="slot" 
 				ondragover="return false"
 			>
-				<!-- TODO: solve this by having the parent component pass its id as a prop https://stackoverflow.com/questions/62752123/get-reference-to-root-element-of-component-in-svelte -->
+<!-- 			<Slot
+				id={i}
+				shapes={shapes}
+			> -->
 				{#if shapes.find(s => s.slot == i)}
-					<p class="shapes">
-					Dropped item {shapes.find(s => s.slot == i).id}
-					</p>
+					<Shape 
+						text={'Draggable item' + shapes.find(s => s.slot == i).id}
+						class="shapes"
+					/>
 				{/if}
 			</div>
 		{/each}
 	</div>
-	{#each shapes as { id }, i}
-		<p 
-			on:dragstart={dragstart} 
-			draggable="true"
-			id = {id}
-			class='shapes'
-		>Draggable item {id}</p>
+	{#each shapes.filter(s => s.slot === null) as { id }, i}
+		<Shape 
+			text={'Draggable item' + id}
+			{id}
+			class="shapes"
+		/>
 	{/each}
 </section>
 
@@ -103,18 +98,6 @@
     border: #999 1px dashed ;
     padding: 8px;
     font-size: 19px;
-  }
-
-  .shapes {
-    display: inline-block;
-    background-color: #FFF3CC;
-    border-bottom: #DFBC6A 1px solid;
-    margin: 10px;
-    padding: 8px;
-    font-size: 18px;
-    text-align: center;
-    box-shadow: 2px 2px 2px #999;
-    cursor: move;
   }
 
   .slotsContainer {
