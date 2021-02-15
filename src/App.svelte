@@ -17,63 +17,23 @@
 	]
 	let slots = new Array(shapes.length)
 	let status = 'Start dragging'
-
-	function handleDragDrop(e) {
-		console.log(e.target)
-	  e.preventDefault()
-	  const element_id = e
-	      .dataTransfer
-	      .getData("text")
-	  const slotId = e.target.id.split("slot")[1] //🤢
-	  shapes.find(shape => shape.id == element_id).slot = slotId
-	  console.log(slots, shapes)
-	  shapes = shapes //😕
-	  status = ("You dropped " + element_id + " into drop zone")
-  }
-
-  function handleDragEnter(e) {
-    status = "You are dragging over the " + e
-        .target
-        .getAttribute('id');
-    console.log(status)
-  }
-
-  function handleDragLeave(e) {
-    status = "You left the " + e
-        .target
-        .getAttribute('id')
-    console.log(status)
-  }
-
-  function dragstart(ev) {
-  	// Add the target element's id to the data transfer object
-  	console.log("draggiong",  ev.target.getAttribute('id'))
-  	ev.dataTransfer
-       .setData("text", ev.target.getAttribute('id'));
-	}
 </script>
 
 <section class='menu-left'>
 	<h1>{status}</h1>
 	<div class = slotsContainer>
 		{#each slots as slot, i}
-			<div 
-				on:drop={handleDragDrop} 
-				id={'slot'+i}
-				class="slot" 
-				ondragover="return false"
-			>
-<!-- 			<Slot
+			<Slot
 				id={i}
-				shapes={shapes}
-			> -->
+				bind:shapes={shapes}
+			>
 				{#if shapes.find(s => s.slot == i)}
 					<Shape 
 						text={'Draggable item' + shapes.find(s => s.slot == i).id}
 						class="shapes"
 					/>
 				{/if}
-			</div>
+			</Slot>
 		{/each}
 	</div>
 	{#each shapes.filter(s => s.slot === null) as { id }, i}
