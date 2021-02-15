@@ -2,7 +2,7 @@
 	export let id = -1
   export let shapes
   export let status
-  let filled = false
+  export let filled = false
 
 	function handleDragDrop(e) {
     e.preventDefault()
@@ -13,7 +13,7 @@
     shapes.find(shape => shape.id == element_id).slot = slotId
     console.log(shapes)
     shapes = shapes //😕
-    status = ("You dropped " + element_id + " into drop zone")
+    status = ("You dropped " + element_id + " into drop zone " + id)
     filled = true
   }
 
@@ -22,20 +22,17 @@
       return true
     }
     console.log("dragover")
-    e.preventDefault();
-    e.dataTransfer.dropEffect = "move";
-
+    e.preventDefault()
+    e.dataTransfer.dropEffect = "move"
   }
-  //on:ondragover={handleDragOver}
-  //ondragover="return false"
 </script>
 
 <div
 	on:drop={handleDragDrop} 
   on:dragover={handleDragOver}
-  
   id={'slot'+id}
-  class="slot" 
+  class="slot"
+  class:filled={filled}
 >
   <slot></slot>
 </div>
@@ -46,5 +43,9 @@
     border: #999 1px dashed ;
     padding: 8px;
     font-size: 19px;
+  }
+
+  .filled {
+    background-color: #faa;
   }
 </style>

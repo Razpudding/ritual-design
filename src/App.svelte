@@ -27,6 +27,7 @@
 				id={i}
 				bind:shapes={shapes}
 				bind:status={status}
+				filled={shapes.find(s => s.slot == i) !== undefined}
 			>
 				{#if shapes.find(s => s.slot == i)}
 					<Shape 
@@ -38,7 +39,7 @@
 			</Slot>
 		{/each}
 	</div>
-	{#each shapes.filter(s => s.slot === null) as { id }, i}
+	{#each shapes.filter(s => s.slot === null) as { id } (id)}
 		<Shape 
 			text={'Draggable item' + id}
 			{id}

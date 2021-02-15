@@ -2,6 +2,7 @@
 	export let text = ''
 	export let id = -1
 	export let shapes = null
+	let inContainer = false
 
 	function dragstart(ev) {
   	// Add the target element's id to the data transfer object
@@ -10,10 +11,9 @@
        .setData("text", ev.target.getAttribute('id'));
 	}
 	function clickHandler(e) {
-		console.log(e.target)
+		if (!shapes) return
 		shapes.find(shape => shape.id == e.target.id).slot = null
 		shapes = shapes
-		console.log(shapes)
 	}
 </script>
 
