@@ -18,8 +18,15 @@
 	let slots = new Array(shapes.length)
 	let status = 'Start dragging'
 </script>
-
-<section class='menu-left'>
+<section class='menu'>
+	{#each shapes.filter(s => s.slot === null) as { id } (id)}
+		<Shape
+			text={'Draggable item' + id}
+			{id}
+		/>
+	{/each}
+</section>
+<section class='content'>
 	<h1>{status}</h1>
 	<div class = slotsContainer>
 		{#each slots as slot, i}
@@ -34,27 +41,34 @@
 						bind:shapes={shapes}
 						text={'Draggable item' + shapes.find(s => s.slot == i).id}
 						id={shapes.find(s => s.slot == i).id}
+						inContainer=true
 					/>
 				{/if}
 			</Slot>
 		{/each}
 	</div>
-	{#each shapes.filter(s => s.slot === null) as { id } (id)}
-		<Shape 
-			text={'Draggable item' + id}
-			{id}
-		/>
-	{/each}
 </section>
 
 <style>
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
+	.menu {
+		height: 100%; /* 100% Full-height */
+		width: 25%; /* 0 width - change this with JavaScript */
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Stay on top */
+		top: 0; /* Stay at the top */
+		left: 0;
+		background-color: lightgreen; /* Black*/
+		overflow-x: hidden; /* Disable horizontal scroll */
+		padding-top: 60px; /* Place content 60px from the top */
+		transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+		clear: left;
 	}
 
+	.content {
+		width: 75%;
+		float: right;
+		margin: auto;
+	}
   .slotsContainer {
   	display:grid;
   	grid-template-columns: 1fr 1fr 1fr;
@@ -62,4 +76,11 @@
   	height: 4em;
   	padding: 1em;
   }
+
+  h1 {
+		color: #ff3e00;
+		text-transform: uppercase;
+		font-size: 4em;
+		font-weight: 100;
+	}
 </style>

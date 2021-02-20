@@ -21,7 +21,6 @@
     if (filled){
       return true
     }
-    console.log("dragover")
     e.preventDefault()
     e.dataTransfer.dropEffect = "move"
   }
@@ -41,8 +40,6 @@
   .slot {
     background-color: #eee;
     border: #999 1px dashed ;
-    padding: 8px;
-    font-size: 19px;
   }
 
   .filled {
