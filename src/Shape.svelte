@@ -1,7 +1,7 @@
 <script>
 	export let text = ''
 	export let id = -1
-	export let shapes = null
+	export let shapes
 	export let inContainer = false
 
 	function dragstart(ev) {

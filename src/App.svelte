@@ -5,6 +5,7 @@
 	/*
 	* TODO: format code, remove ;
 	* 			maintain order of elements in dropped zone
+	* 			the dropdown should trigger a function through an event that updates category as well as the shape's text value as well as the next dropdown
 	*/
 
 	import Shape from './Shape.svelte'
@@ -12,9 +13,7 @@
 	import Dropdown from './Dropdown.svelte'
 
 	let shapes = [
-		{	type: 'rect', id: 0, slot: null },
-		{	type: 'rect', id: 1, slot: null },
-		{	type: 'rect', id: 2, slot: null }
+		{	type: 'rect', id: 0, slot: null, text:"test" },
 	]
 	let slots = new Array(shapes.length)
 	let status = 'Start dragging'
@@ -25,7 +24,7 @@
 	<Dropdown
 		title=''
 		options={categories}
-		bind:selected={category}
+		bind:selected={shapes[0].text}
 	/>
 	{#each shapes.filter(s => s.slot === null) as { id } (id)}
 		<Shape
@@ -48,7 +47,8 @@
 				{#if shapes.find(s => s.slot == i)}
 					<Shape 
 						bind:shapes={shapes}
-						text={'Draggable item' + shapes.find(s => s.slot == i).id}
+						_text={'Draggable item' + shapes.find(s => s.slot == i).id}
+						text={shapes.find(s => s.slot == i).text}
 						id={shapes.find(s => s.slot == i).id}
 						inContainer=true
 					/>
@@ -60,16 +60,15 @@
 
 <style>
 	.menu {
-		height: 100%; /* 100% Full-height */
-		width: 25%; /* 0 width - change this with JavaScript */
-		position: fixed; /* Stay in place */
-		z-index: 1; /* Stay on top */
-		top: 0; /* Stay at the top */
+		height: 100%;
+		width: 25%;
+		position: fixed;
+		z-index: 1;
+		top: 0;
 		left: 0;
-		background-color: lightgreen; /* Black*/
+		background-color: lightgreen; 
 		overflow-x: hidden; /* Disable horizontal scroll */
-		padding-top: 60px; /* Place content 60px from the top */
-		transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+		padding-top: 1em;
 		clear: left;
 	}
 
