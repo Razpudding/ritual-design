@@ -9,6 +9,7 @@
 
 	import Shape from './Shape.svelte'
 	import Slot from './Slot.svelte'
+	import Dropdown from './Dropdown.svelte'
 
 	let shapes = [
 		{	type: 'rect', id: 0, slot: null },
@@ -17,11 +18,19 @@
 	]
 	let slots = new Array(shapes.length)
 	let status = 'Start dragging'
+	let categories = ['nose','ears','knees','toes']
+	let category = categories[0]
 </script>
 <section class='menu'>
+	<Dropdown
+		title=''
+		options={categories}
+		bind:selected={category}
+	/>
 	{#each shapes.filter(s => s.slot === null) as { id } (id)}
 		<Shape
-			text={'Draggable item' + id}
+			text={category}
+			_text={'Draggable item' + id}
 			{id}
 		/>
 	{/each}
