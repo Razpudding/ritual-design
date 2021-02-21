@@ -1,7 +1,7 @@
 <script>
 	export let text = ''
 	export let id = -1
-	export let shapes
+	export let shapes = []
 	export let inContainer = false
 
 	function dragstart(ev) {
@@ -31,9 +31,8 @@
   .shapes {
     background-color: #FFF3CC;
     border-bottom: #DFBC6A 1px solid;
-    margin: 10px;
-    padding: 8px;
-    font-size: 18px;
+    padding: .3em;
+    font-size: 1.2em;
     text-align: center;
     box-shadow: 2px 2px 2px #999;
     cursor: move;

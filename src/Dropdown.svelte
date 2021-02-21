@@ -2,13 +2,13 @@
   import { createEventDispatcher } from 'svelte';
   export let title
   export let options
-  export let selected
+  export let selected = ''
 
   const dispatch = createEventDispatcher()
 
   function makeSelection(){
     console.log("makeSelection")
-    dispatch('categorySelection', {
+    dispatch('selection', {
       text: selected
     })
   }
@@ -22,7 +22,6 @@
       <option value={option}>{option}
     {/each}
   </select>
-  <h2>{selected}</h2>
 </div>
 
 <style>

@@ -6,11 +6,14 @@
 	* TODO: format code, remove ;
 	* 			the dropdown should trigger a function through an event that updates category as well as the shape's text value as well as the next dropdown
 	*/
-
+	import { onMount } from 'svelte'
 	import Shape from './Shape.svelte'
 	import Slot from './Slot.svelte'
 	import Dropdown from './Dropdown.svelte'
+	import {loadData, generateText} from './textGenerator.js'
 
+	let categories = []
+	let words = [[]]
 	let shapes = [
 		{	type: 'rect', id: 0, slot: null, text:"" },
 		{	type: 'rect', id: 1, slot: null, text:"" },
@@ -18,30 +21,51 @@
 		{	type: 'rect', id: 3, slot: null, text:"" },
 	]
 	let slots = new Array(9)
-	let status = 'Start dragging'
-	let categories = ['nose','ears','knees','toes']
-	let category = categories[0]
 
+	let currentCategory = 0
+	let currentWord = ''
+	$: currentShapeText = currentWord == ''? currentCategory : currentWord
+	let status = 'Start dragging'
+	
 	function changeCategory(e){
 		console.log("changing cat to", e.detail.text)
-		category = e.detail.text
+		currentCategory = e.detail.text
 	}
+	function changeWord(e){
+		console.log("changing word to", e.detail.text)
+		currentWord = e.detail.text
+	}
+	onMount(async () => {
+		const wordData = await loadData('assets/taxonomy_0.csv')
+		console.log('wordData', wordData)
+		categories = Object.keys(wordData)
+		console.log('categories', categories)
+		words = wordData
+		currentCategory = categories[0]
+		console.log(words[currentCategory])
+	})
 </script>
 <section class='menu'>
 	<Dropdown
-		title=''
+		title='Category'
 		options={categories}
-		on:categorySelection={changeCategory}
+		on:selection={changeCategory}
 	/>
+	<Dropdown
+		title='Word'
+		options={words[currentCategory]}
+		on:selection={changeWord}
+	/>
+	<h1>Shape</h1>
 	{#each shapes.filter(s => s.slot === null) as { id } (id)}
 		<Shape
-			text={category}
+			text={currentWord == ''? currentCategory : currentWord}
 			{id}
 		/>
 	{/each}
 </section>
 <section class='content'>
-	<h1>{status}</h1>
+	<h1 class='status'>{status}</h1>
 	<div class = slotsContainer>
 		{#each slots as slot, i}
 			<Slot
@@ -49,7 +73,7 @@
 				bind:shapes={shapes}
 				bind:status={status}
 				filled={shapes.find(s => s.slot == i) !== undefined}
-				currentCategory={category}
+				currentCategory={currentShapeText}
 			>
 				{#if shapes.find(s => s.slot == i)}
 					<Shape 
@@ -74,12 +98,12 @@
 		left: 0;
 		background-color: lightgreen; 
 		overflow-x: hidden; /* Disable horizontal scroll */
-		padding-top: 1em;
+		padding: 1em;
 		clear: left;
 	}
 
 	.content {
-		width: 75%;
+		width: 70%;
 		float: right;
 		margin: auto;
 	}
@@ -92,7 +116,7 @@
   	padding: 1em;
   }
 
-  h1 {
+  .status {
 		color: #ff3e00;
 		text-transform: uppercase;
 		font-size: 4em;
