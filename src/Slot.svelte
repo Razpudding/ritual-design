@@ -3,6 +3,7 @@
   export let shapes
   export let status
   export let filled = false
+  export let currentCategory
 
 	function handleDragDrop(e) {
     e.preventDefault()
@@ -10,7 +11,9 @@
         .dataTransfer
         .getData("text")
     const slotId = e.target.id.split("slot")[1] //🤢
-    shapes.find(shape => shape.id == element_id).slot = slotId
+    const myShape = shapes.find(shape => shape.id == element_id)
+    myShape.slot = slotId
+    myShape.text = currentCategory
     console.log(shapes)
     shapes = shapes //😕
     status = ("You dropped " + element_id + " into drop zone " + id)
