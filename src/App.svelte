@@ -5,8 +5,6 @@
 	/*
 	* TODO: 
 	* Selecting first dropdown should clear second dropdown selector visually
-	* The menushape shouldn't dissapear when you drag it
-			One solution would be to add a new item to the spaes array when you drop a shape in a slot. Feels a bit dirty but might work well.
 	*
 	*/
 	import { onMount } from 'svelte'
@@ -20,7 +18,7 @@
 	let shapes = [
 		{	type: 'rect', id: 0, slot: null, text:"" },
 	]
-	let slots = new Array(20)
+	let slots = new Array(9)
 
 	let currentCategory = 0
 	let currentWord = ''
@@ -84,7 +82,7 @@
 				bind:status={status}
 				filled={shapes.find(s => s.slot == i) !== undefined}
 				currentCategory={currentShapeText}
-				rotation={i*20+'deg'}
+				rotation={i*(360/slots.length)+'deg'}
 			>
 				{#if shapes.find(s => s.slot == i)}
 					<Shape 
