@@ -5,6 +5,8 @@
   export let filled = false
   export let currentCategory
 
+  export let rotation = '20deg'
+
 	function handleDragDrop(e) {
     e.preventDefault()
     const element_id = e
@@ -29,7 +31,7 @@
   }
 </script>
 
-<div
+<div style="--rot: {rotation}"
 	on:drop={handleDragDrop} 
   on:dragover={handleDragOver}
   id={'slot'+id}
@@ -42,7 +44,12 @@
 <style>
   .slot {
     background-color: #eee;
-    border: #999 1px dashed ;
+    border: #999 1px dashed;
+    transform: rotate(var(--rot));
+    position: fixed;
+    height: 3em;
+    width: 50%;
+    margin: auto;
   }
 
   .filled {

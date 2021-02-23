@@ -3,8 +3,9 @@
 
 <script>
 	/*
-	* TODO: format code, remove ;
-	* 			the dropdown should trigger a function through an event that updates category as well as the shape's text value as well as the next dropdown
+	* TODO: 
+	* 			rotate each slot, maybe use: https://svelte.dev/repl/4b1c649bc75f44eb9142dadc0322eccd?version=3.6.7
+
 	*/
 	import { onMount } from 'svelte'
 	import Shape from './Shape.svelte'
@@ -20,7 +21,7 @@
 		{	type: 'rect', id: 2, slot: null, text:"" },
 		{	type: 'rect', id: 3, slot: null, text:"" },
 	]
-	let slots = new Array(9)
+	let slots = new Array(20)
 
 	let currentCategory = 0
 	let currentWord = ''
@@ -74,6 +75,7 @@
 				bind:status={status}
 				filled={shapes.find(s => s.slot == i) !== undefined}
 				currentCategory={currentShapeText}
+				rotation={i*20+'deg'}
 			>
 				{#if shapes.find(s => s.slot == i)}
 					<Shape 
@@ -108,12 +110,6 @@
 		margin: auto;
 	}
   .slotsContainer {
-  	display:grid;
-  	grid-template-columns: 1fr 1fr 1fr;
-  	grid-column-gap: 1em;
-  	grid-row-gap: 1em;
-  	height: 10em;
-  	padding: 1em;
   }
 
   .status {
@@ -121,5 +117,6 @@
 		text-transform: uppercase;
 		font-size: 4em;
 		font-weight: 100;
+		visibility: hidden;
 	}
 </style>
