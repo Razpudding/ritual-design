@@ -4,8 +4,10 @@
 <script>
 	/*
 	* TODO: 
-	* 			rotate each slot, maybe use: https://svelte.dev/repl/4b1c649bc75f44eb9142dadc0322eccd?version=3.6.7
-
+	* Selecting first dropdown should clear second dropdown selector visually
+	* The menushape shouldn't dissapear when you drag it
+			One solution would be to add a new item to the spaes array when you drop a shape in a slot. Feels a bit dirty but might work well.
+	*
 	*/
 	import { onMount } from 'svelte'
 	import Shape from './Shape.svelte'
@@ -17,9 +19,6 @@
 	let words = [[]]
 	let shapes = [
 		{	type: 'rect', id: 0, slot: null, text:"" },
-		{	type: 'rect', id: 1, slot: null, text:"" },
-		{	type: 'rect', id: 2, slot: null, text:"" },
-		{	type: 'rect', id: 3, slot: null, text:"" },
 	]
 	let slots = new Array(20)
 
@@ -27,7 +26,17 @@
 	let currentWord = ''
 	$: currentShapeText = currentWord == ''? currentCategory : currentWord
 	let status = 'Start dragging'
-	
+	//; 
+	$: newShapeNeeded = shapes[shapes.length -1].slot != null ? freshShape(): console.log("no clone needed")
+
+	//Create a fresh shape with the same text and type but a new id and slot
+	function freshShape(){
+		const newShape = {...shapes[shapes.length -1]}
+		newShape.slot = null
+		newShape.id += 1
+		shapes = shapes.concat(newShape)
+		// shapes.push(...shapes[shapes.length -1])
+	}
 	function changeCategory(e){
 		console.log("changing cat to", e.detail.text)
 		currentCategory = e.detail.text
