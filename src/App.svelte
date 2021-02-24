@@ -5,7 +5,11 @@
 	/*
 	* TODO: 
 	* Selecting first dropdown should clear second dropdown selector visually
-	*
+	* Slot adding and removing should be done in a proper function which checks which slots are safe to remove (empty) and maybe where a slot should be added visually
+	* Add color change option
+	* !Add way to change a selected slot's properties
+	* !Add way to write own text, add random option, 
+	* Add category as first option for word dropdown
 	*/
 	import { onMount } from 'svelte'
 	import Shape from './Shape.svelte'
@@ -96,6 +100,7 @@
 		{/each}
 	</div>
 	<div id="addSlotBtn" on:click="{e => {slots = slots.concat(0); console.log(slots)}}">Add slot</div>
+	<div id="removeSlotBtn" on:click="{e => {slots = slots.slice(0, -1); console.log(slots)}}">Remove slot</div>
 </section>
 
 <style>
@@ -131,5 +136,10 @@
 	#addSlotBtn {
 		position: absolute;
   	bottom: 1em;
+	}
+	#removeSlotBtn {
+		position: absolute;
+  	bottom: 1em;
+  	right: 1em;
 	}
 </style>
