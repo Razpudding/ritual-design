@@ -18,14 +18,15 @@
 	let shapes = [
 		{	type: 'rect', id: 0, slot: null, text:"" },
 	]
-	let slots = new Array(9)
+	$: slots = new Array(5)
 
 	let currentCategory = 0
 	let currentWord = ''
 	$: currentShapeText = currentWord == ''? currentCategory : currentWord
 	let status = 'Start dragging'
-	//; 
-	$: newShapeNeeded = shapes[shapes.length -1].slot != null ? freshShape(): console.log("no clone needed")
+
+	//Reactive var that checks if a new shape is needed in the menu
+	$: newShapeNeeded = shapes[shapes.length -1].slot != null ? freshShape(): console.log("not needed")
 
 	//Create a fresh shape with the same text and type but a new id and slot
 	function freshShape(){
@@ -33,7 +34,6 @@
 		newShape.slot = null
 		newShape.id += 1
 		shapes = shapes.concat(newShape)
-		// shapes.push(...shapes[shapes.length -1])
 	}
 	function changeCategory(e){
 		console.log("changing cat to", e.detail.text)
@@ -95,6 +95,7 @@
 			</Slot>
 		{/each}
 	</div>
+	<div id="addSlotBtn" on:click="{e => {slots = slots.concat(0); console.log(slots)}}">Add slot</div>
 </section>
 
 <style>
@@ -125,5 +126,10 @@
 		font-size: 4em;
 		font-weight: 100;
 		visibility: hidden;
+	}
+
+	#addSlotBtn {
+		position: absolute;
+  	bottom: 1em;
 	}
 </style>
