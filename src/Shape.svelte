@@ -1,7 +1,8 @@
 <script>
 	export let text = ''
 	export let id = -1
-	export let shapes = []
+	export let shapes = [] //TODO find out if reactivity of shapes can be triggered through altering one single shape in the array so this prop can be removed
+	export let thisShape
 	export let inContainer = false
 
 	function dragstart(ev) {
@@ -10,27 +11,27 @@
   	ev.dataTransfer
        .setData("text", ev.target.getAttribute('id'));
 	}
+	//TODO: Move this whole function to the slot? Put the event listener on the slot which return the slotted shape through Svelte slot funct.
 	function clickHandler(e) {
-		if (!shapes) return
-		const thisShape = shapes.find(shape => shape.id == e.target.id)
-		if (thisShape.slot === null) {
+		if (thisShape.slot == null){
 			//TODO: make text writeable. Maybe it's better to use content editable or smth like that and put the check in that event handler instead
 		} else {
-			thisShape.slot = null
+			shapes = shapes
 		}
-		shapes = shapes
 	}
 </script>
 
-<p
-	on:dragstart={dragstart} 
-	on:click={clickHandler}
+<input 
+	type=text
 	draggable="true"
 	id = {id}
 	class='shapes'
+	placeholder={text}
 	class:positioned={inContainer}
-	>{text}
-</p>
+	on:dragstart={dragstart} 
+	on:click={clickHandler}
+	on:_change="{e => {thisShape.text = }  }"
+>
 
 <style>
   .shapes {

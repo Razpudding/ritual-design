@@ -5,9 +5,9 @@
 	/*
 	* TODO: 
 	* Selecting first dropdown should clear second dropdown selector visually
-	* Slot adding and removing should be done in a proper function which checks which slots are safe to remove (empty) and maybe where a slot should be added visually
+	* Slot adding and removing should be done in a proper function which checks which slots are safe to remove (empty) and maybe where a slot should be added visually.
 	* Add color change option
-	* !Add way to change a selected slot's properties
+	* !Add way to change a placed shape's properties
 	* !Add way to write own text, add random option, 
 	* Write a proper readme
 	* Remove logic that expect multiple shapes in the menu and multiple per slot
@@ -27,9 +27,9 @@
 
 	let currentCategory = 0
 	let currentWord = ''
-	$: currentShapeText = currentWord == ''? currentCategory : currentWord
 	let status = 'Start dragging'
 
+	$: currentShapeText = currentWord == ''? currentCategory : currentWord
 	//Reactive var that checks if a new shape is needed in the menu
 	$: newShapeNeeded = shapes[shapes.length -1].slot != null ? freshShape(): console.log("not needed")
 
@@ -76,6 +76,8 @@
 	{#each shapes.filter(s => s.slot === null) as { id } (id)}
 		<Shape
 			text={currentWord == ''? currentCategory : currentWord}
+			bind:shapes={shapes}
+			thisShape={shapes.find(s => s.id == id)}
 			{id}
 		/>
 	{/each}
@@ -95,6 +97,8 @@
 				{#if shapes.find(s => s.slot == i)}
 					<Shape 
 						bind:shapes={shapes}
+						bind:value={shapes.find(s => s.slot == i).text}
+						thisShape={shapes.find(s => s.slot == i)}
 						text={shapes.find(s => s.slot == i).text}
 						id={shapes.find(s => s.slot == i).id}
 						inContainer=true
