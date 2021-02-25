@@ -9,13 +9,14 @@
 	* Add color change option
 	* !Add way to change a selected slot's properties
 	* !Add way to write own text, add random option, 
-	* Add category as first option for word dropdown
+	* Write a proper readme
+	* Remove logic that expect multiple shapes in the menu and multiple per slot
 	*/
 	import { onMount } from 'svelte'
 	import Shape from './Shape.svelte'
 	import Slot from './Slot.svelte'
 	import Dropdown from './Dropdown.svelte'
-	import {loadData, generateText} from './textGenerator.js'
+	import {loadData, generateText} from './dataHandler.js'
 
 	let categories = []
 	let words = [[]]
@@ -51,12 +52,15 @@
 		const wordData = await loadData('assets/taxonomy_0.csv')
 		console.log('wordData', wordData)
 		categories = Object.keys(wordData)
-		console.log('categories', categories)
+		//Add the name of the category to each word array belonging to that category
+		for (let category in wordData){
+			wordData[category].unshift(category)
+		}
 		words = wordData
-		currentCategory = categories[0]
-		console.log(words[currentCategory])
+		currentCategory = currentWord = categories[0]
 	})
 </script>
+
 <section class='menu'>
 	<Dropdown
 		title='Category'

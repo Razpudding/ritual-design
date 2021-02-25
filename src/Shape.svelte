@@ -12,7 +12,12 @@
 	}
 	function clickHandler(e) {
 		if (!shapes) return
-		shapes.find(shape => shape.id == e.target.id).slot = null
+		const thisShape = shapes.find(shape => shape.id == e.target.id)
+		if (thisShape.slot === null) {
+			//TODO: make text writeable. Maybe it's better to use content editable or smth like that and put the check in that event handler instead
+		} else {
+			thisShape.slot = null
+		}
 		shapes = shapes
 	}
 </script>
