@@ -5,6 +5,7 @@
   export let filled = false
   export let rotation = '20deg'
 
+  //On drop, find the id of the shape dropped and update that shape to reflect this slot
 	function handleDragDrop(e) {
     e.preventDefault()
     const element_id = e
