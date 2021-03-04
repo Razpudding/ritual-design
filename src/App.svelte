@@ -7,6 +7,9 @@
 	* !Add way to write own text, add random option, 
 	* Write a proper readme
 	* Remove logic that expect multiple shapes in the menu and multiple per slot
+	* clean up slot now that it's connected to thisSlot (rename to shapeData and slotData?)
+	* A slot should be cleared when a shape is dragged out of it :()
+	* Slots need to be re-rotated when one is removed? Could be recalc inside the slot
 	*/
 	import { onMount } from 'svelte'
 	import { shapes } from './stores.js';
@@ -16,7 +19,11 @@
 	import {loadData, generateText} from './dataHandler.js'
 	//Initialize variables
 	$shapes.push({	type: 'rect', id: 0, slot: null, text:"" })
-	$: slots = new Array(5)
+	let slots = []
+	for (let i = 0; i < 5; i ++){
+		slots.push({ id: i+1, shape: null })
+	}
+
 	let categories = []
 	let words = [[]]
 	let currentCategory = 0
@@ -52,13 +59,13 @@
 	//TODO: if no slot can be safely removed, alert user
 	// Ah this wont work with just empty values in an array, slots will need to be a bit more complex
 	function removeSlot(index){
-		console.log(slots, index)
-		if ($shapes.find(s => s.slot == index)){
-			console.log("found shape")
-			index == 0 ? console.log("all slots filled") : removeSlot(index --)
+		console.log("remove called with", index, slots)
+		if (slots[index].shape === null){
+			console.log(index, 'safe to remove')
+			slots.splice(index, 1)
+			slots = slots
 		} else {
-			console.log("deleting slot" , index)
-			slots = slots.slice(index, 1)
+			index > 0 ? removeSlot(--index) : console.log("no slots can be removed")
 		}
 	}
 	//Load the word data and set variables
@@ -99,22 +106,23 @@
 <section class='content'>
 	<h1 class='status'>{status}</h1>
 	<div class = slotsContainer>
-		{#each slots as slot, i}
+		{#each slots as slot}
 			<Slot
-				id={i}
+				thisSlot={slot}
+				slots={slots}
 				bind:status={status}
-				filled={$shapes.find(s => s.slot == i) !== undefined}
-				rotation={i*(360/slots.length)+'deg'}
+				filled={$shapes.find(s => s.slot == slot.id) !== undefined}
+				rotation={(slot.id -1)*(360/slots.length)+'deg'}
 			>
-				{#if $shapes.find(s => s.slot == i)}
+				{#if $shapes.find(s => s.slot == slot.id)}
 					<Shape 
-						thisShape={$shapes.find(s => s.slot == i)}
+						thisShape={$shapes.find(s => s.slot == slot.id)}
 					/>
 				{/if}
 			</Slot>
 		{/each}
 	</div>
-	<div id="addSlotBtn" on:click="{e => {slots = slots.concat(0); console.log(slots)}}">Add slot</div>
+	<div id="addSlotBtn" on:click="{e => {slots = slots.concat({ id: slots.length, shape: null }); console.log(slots)}}">Add slot</div>
 	<div id="removeSlotBtn" on:click={removeSlot(slots.length-1)}>Remove slot</div>
 </section>
 

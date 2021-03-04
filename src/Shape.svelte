@@ -1,8 +1,6 @@
 <script>
-	// export let text = ''
 	export let id = -1
 	export let thisShape 
-	export let inContainer = false
 
 	function dragstart(ev) {
   	// Add the target element's id to the data transfer object

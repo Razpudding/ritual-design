@@ -1,6 +1,7 @@
 <script>
   import { shapes } from './stores.js'
-	export let id = -1
+  export let thisSlot
+  export let slots
   export let status
   export let filled = false
   export let rotation = '20deg'
@@ -11,12 +12,21 @@
     const element_id = e
         .dataTransfer
         .getData("text")
-    const slotId = e.target.id.split("slot")[1] //🤢
     const myShape = $shapes.find(shape => shape.id == element_id)
-    myShape.slot = slotId
+    const duplicate = slots.find(s => s.shape == myShape.id)
+    if (duplicate){
+      console.log("duplicate found", duplicate)
+      duplicate.shape = null
+    } 
+    //Bind the slot to the shape and visa versa
+    thisSlot.shape = myShape.id
+    myShape.slot = thisSlot.id
     console.log($shapes)
+    console.log(slots)
+    //TODO: check if slots needs to be updated here?
+    slots = slots
     $shapes = $shapes
-    status = ("You dropped " + element_id + " into drop zone " + id)
+    status = ("You dropped " + element_id + " into drop zone " + thisSlot.id)
     filled = true
   }
 
@@ -32,7 +42,7 @@
 <div style="--rot: {rotation}"
 	on:drop={handleDragDrop} 
   on:dragover={handleDragOver}
-  id={'slot'+id}
+  id={thisSlot.id}
   class="slot"
   class:filled={filled}
 >
