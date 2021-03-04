@@ -1,10 +1,8 @@
 <script>
+  import { shapes } from './stores.js'
 	export let id = -1
-  export let shapes
   export let status
   export let filled = false
-  export let currentCategory
-
   export let rotation = '20deg'
 
 	function handleDragDrop(e) {
@@ -13,12 +11,10 @@
         .dataTransfer
         .getData("text")
     const slotId = e.target.id.split("slot")[1] //🤢
-    const myShape = shapes.find(shape => shape.id == element_id)
+    const myShape = $shapes.find(shape => shape.id == element_id)
     myShape.slot = slotId
-    // myShape.text = currentCategory Don't think I need this anymore
-    
-    console.log(shapes)
-    shapes = shapes //😕
+    console.log($shapes)
+    $shapes = $shapes
     status = ("You dropped " + element_id + " into drop zone " + id)
     filled = true
   }

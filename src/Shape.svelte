@@ -1,8 +1,8 @@
 <script>
+	import { shapes } from './stores.js' //Can prob do without this import because of use of thisshape
 	export let text = ''
 	export let id = -1
-	export let shapes = [] //TODO find out if reactivity of shapes can be triggered through altering one single shape in the array so this prop can be removed
-	export let thisShape
+	export let thisShape 
 	export let inContainer = false
 
 	function dragstart(ev) {
@@ -16,7 +16,7 @@
 		if (thisShape.slot == null){
 			//TODO: make text writeable. Maybe it's better to use content editable or smth like that and put the check in that event handler instead
 		} else {
-			shapes = shapes
+			$shapes = $shapes
 		}
 	}
 
