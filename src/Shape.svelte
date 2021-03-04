@@ -29,8 +29,9 @@
 	placeholder={text}
 	class:positioned={inContainer}
 	on:dragstart={dragstart} 
-	on:click={clickHandler}
-	on:_change="{e => {thisShape.text = }  }"
+	on:_click={clickHandler}
+	bind:value={text}
+	on:change="{e => console.log(this)}"
 >
 
 <style>

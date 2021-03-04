@@ -59,6 +59,7 @@
 		words = wordData
 		currentCategory = currentWord = categories[0]
 	})
+	//bind:_Brokentext={shapes.find(s => s.slot == i).text}
 </script>
 
 <section class='menu'>
@@ -97,9 +98,9 @@
 				{#if shapes.find(s => s.slot == i)}
 					<Shape 
 						bind:shapes={shapes}
-						bind:value={shapes.find(s => s.slot == i).text}
+						
 						thisShape={shapes.find(s => s.slot == i)}
-						text={shapes.find(s => s.slot == i).text}
+						_text={shapes.find(s => s.slot == i).text}
 						id={shapes.find(s => s.slot == i).id}
 						inContainer=true
 					/>

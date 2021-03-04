@@ -49,7 +49,7 @@
     position: fixed;
     height: 3em;
     width: 50%;
-    margin: auto;
+    margin: 50% 50% 50% 50%;
   }
 
   .filled {
