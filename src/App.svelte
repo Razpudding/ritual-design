@@ -131,7 +131,11 @@
 		float: right;
 		margin: auto;
 	}
+	
   .slotsContainer {
+		position: relative;
+		width: 100%;
+		height: 100vh;
   }
 
   .status {

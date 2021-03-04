@@ -43,13 +43,17 @@
 
 <style>
   .slot {
+    display: block;
     background-color: #eee;
     border: #999 1px dashed;
-    transform: rotate(var(--rot));
-    position: fixed;
+    transform: rotate(var(--rot)) translateX(-50%);
+    transform-origin: center right;
+    position: absolute;
+    top: 50%;
+    left: 30%;
     height: 3em;
-    width: 50%;
-    margin: 50% 50% 50% 50%;
+    width: 20%;
+    margin: auto;
   }
 
   .filled {
