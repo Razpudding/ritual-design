@@ -38,15 +38,22 @@
 		const newShape = {...shapes[shapes.length -1]}
 		newShape.slot = null
 		newShape.id += 1
+		newShape.text = (currentWord == ''? currentCategory : currentWord)
 		shapes = shapes.concat(newShape)
 	}
 	function changeCategory(e){
 		console.log("changing cat to", e.detail.text)
 		currentCategory = e.detail.text
+		currentWord = words[currentCategory][0]
+		shapes[shapes.length-1].text = currentWord
+		//Overwrite the selected value of the word selector
+		document.getElementById('dropdownWord').options[0].selected = true
+		console.log("changing word to", currentWord)
 	}
 	function changeWord(e){
 		console.log("changing word to", e.detail.text)
 		currentWord = e.detail.text
+		shapes[shapes.length-1].text = currentWord
 	}
 	onMount(async () => {
 		const wordData = await loadData('assets/taxonomy_0.csv')
@@ -58,8 +65,8 @@
 		}
 		words = wordData
 		currentCategory = currentWord = categories[0]
+		shapes[0].text = currentCategory
 	})
-	//bind:_Brokentext={shapes.find(s => s.slot == i).text}
 </script>
 
 <section class='menu'>
@@ -67,19 +74,22 @@
 		title='Category'
 		options={categories}
 		on:selection={changeCategory}
+		id='dropdownCat'
 	/>
 	<Dropdown
 		title='Word'
 		options={words[currentCategory]}
 		on:selection={changeWord}
+		id='dropdownWord'
 	/>
 	<h1>Shape</h1>
-	{#each shapes.filter(s => s.slot === null) as { id } (id)}
+	{#each shapes.filter(s => s.slot === null) as shape (shape.id)}
 		<Shape
-			text={currentWord == ''? currentCategory : currentWord}
+			text={shape.text}
 			bind:shapes={shapes}
-			thisShape={shapes.find(s => s.id == id)}
-			{id}
+			thisShape={shape}
+			id={shape.id}
+
 		/>
 	{/each}
 </section>
@@ -98,9 +108,8 @@
 				{#if shapes.find(s => s.slot == i)}
 					<Shape 
 						bind:shapes={shapes}
-						
 						thisShape={shapes.find(s => s.slot == i)}
-						_text={shapes.find(s => s.slot == i).text}
+						text={shapes.find(s => s.slot == i).text}
 						id={shapes.find(s => s.slot == i).id}
 						inContainer=true
 					/>
@@ -131,11 +140,11 @@
 		float: right;
 		margin: auto;
 	}
-	
+
   .slotsContainer {
 		position: relative;
 		width: 100%;
-		height: 100vh;
+		height: 100%;
   }
 
   .status {

@@ -19,6 +19,11 @@
 			shapes = shapes
 		}
 	}
+
+	function updateText(e){
+		console.log("changing text", thisShape)
+		thisShape.text = text
+	}
 </script>
 
 <input 
@@ -26,12 +31,11 @@
 	draggable="true"
 	id = {id}
 	class='shapes'
-	placeholder={text}
 	class:positioned={inContainer}
 	on:dragstart={dragstart} 
 	on:_click={clickHandler}
 	bind:value={text}
-	on:change="{e => console.log(this)}"
+	on:change={updateText}
 >
 
 <style>

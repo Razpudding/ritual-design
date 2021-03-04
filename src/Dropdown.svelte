@@ -3,6 +3,7 @@
   export let title
   export let options
   export let selected = ''
+  export let id
 
   const dispatch = createEventDispatcher()
 
@@ -17,7 +18,7 @@
 
 <div>
   <h1>{title}</h1>
-  <select bind:value={selected} on:change={makeSelection}>
+  <select id={id} bind:value={selected} on:change={makeSelection}>
     {#each options as option}
       <option value={option}>{option}
     {/each}

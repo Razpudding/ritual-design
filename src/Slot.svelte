@@ -15,7 +15,8 @@
     const slotId = e.target.id.split("slot")[1] //🤢
     const myShape = shapes.find(shape => shape.id == element_id)
     myShape.slot = slotId
-    myShape.text = currentCategory
+    // myShape.text = currentCategory Don't think I need this anymore
+    
     console.log(shapes)
     shapes = shapes //😕
     status = ("You dropped " + element_id + " into drop zone " + id)
@@ -49,11 +50,9 @@
     transform: rotate(var(--rot)) translateX(-50%);
     transform-origin: center right;
     position: absolute;
-    top: 50%;
     left: 30%;
     height: 3em;
     width: 20%;
-    margin: auto;
   }
 
   .filled {
