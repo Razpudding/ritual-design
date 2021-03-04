@@ -26,8 +26,6 @@
 	let currentWord = ''
 	let status = 'Start dragging'
 
-	//TODO: check if this can be removed 
-	$: currentShapeText = currentWord == ''? currentCategory : currentWord
 	//Reactive var that checks if a new shape is needed in the menu
 	$: newShapeNeeded = $shapes[$shapes.length -1].slot != null ? freshShape(): console.log("not needed")
 
@@ -84,7 +82,6 @@
 	<h1>Shape</h1>
 	{#each $shapes.filter(s => s.slot === null) as shape (shape.id)}
 		<Shape
-			text={shape.text}
 			thisShape={shape}
 		/>
 	{/each}
@@ -102,8 +99,6 @@
 				{#if $shapes.find(s => s.slot == i)}
 					<Shape 
 						thisShape={$shapes.find(s => s.slot == i)}
-						text={$shapes.find(s => s.slot == i).text}
-						inContainer=true
 					/>
 				{/if}
 			</Slot>

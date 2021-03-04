@@ -1,9 +1,9 @@
 <script>
-	export let text = ''
+	// export let text = ''
 	export let id = -1
 	export let thisShape 
 	export let inContainer = false
-	
+
 	function dragstart(ev) {
   	// Add the target element's id to the data transfer object
   	console.log("dragging", id)
@@ -17,10 +17,10 @@
 	draggable="true"
 	id = {thisShape.id}
 	class='shapes'
-	class:positioned={inContainer}
+	class:positioned={thisShape.slot !== null}
 	on:dragstart={dragstart} 
-	bind:value={text}
-	on:change="{e => thisShape.text = text}" 
+	bind:value={thisShape.text}
+	on:change="{e => thisShape.text = thisShape.text}" 
 >
 
 <style>
