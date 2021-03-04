@@ -1,6 +1,3 @@
-<!-- Svelte: https://www.youtube.com/watch?v=aZzGvfnw8Zw&ab_channel=NoahGlaser -->
-<!-- Native: https://svelte.dev/repl/adf5a97b91164c239cc1e6d0c76c2abe?version=3.14.1 -->
-
 <script>
 	/*
 	* TODO: 
@@ -50,6 +47,19 @@
 		console.log("changing word to", e.detail.text)
 		currentWord = e.detail.text
 		$shapes[$shapes.length-1].text = currentWord
+	}
+	//Check if a slot can be removed, if not, call self with prev slot
+	//TODO: if no slot can be safely removed, alert user
+	// Ah this wont work with just empty values in an array, slots will need to be a bit more complex
+	function removeSlot(index){
+		console.log(slots, index)
+		if ($shapes.find(s => s.slot == index)){
+			console.log("found shape")
+			index == 0 ? console.log("all slots filled") : removeSlot(index --)
+		} else {
+			console.log("deleting slot" , index)
+			slots = slots.slice(index, 1)
+		}
 	}
 	//Load the word data and set variables
 	onMount(async () => {
@@ -105,7 +115,7 @@
 		{/each}
 	</div>
 	<div id="addSlotBtn" on:click="{e => {slots = slots.concat(0); console.log(slots)}}">Add slot</div>
-	<div id="removeSlotBtn" on:click="{e => {slots = slots.slice(0, -1); console.log(slots)}}">Remove slot</div>
+	<div id="removeSlotBtn" on:click={removeSlot(slots.length-1)}>Remove slot</div>
 </section>
 
 <style>
