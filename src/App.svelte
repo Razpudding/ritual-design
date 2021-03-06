@@ -1,15 +1,12 @@
 <script>
 	/*
 	* TODO: 
-	* Slot adding and removing should be done in a proper function which checks which slots are safe to remove (empty) and maybe where a slot should be added visually. Removing a slot with a shape should prob get rid of the shape data as well
 	* Add color change option
-	* !Add way to change a placed shape's properties
-	* !Add way to write own text, add random option, 
+	* add random option, 
 	* Write a proper readme
 	* Remove logic that expect multiple shapes in the menu and multiple per slot
-	* clean up slot now that it's connected to thisSlot (rename to shapeData and slotData?)
 	* A slot should be cleared when a shape is dragged out of it :()
-	* Slots need to be re-rotated when one is removed? Could be recalc inside the slot
+	* Slots need to be re-rotated when one is removed? Could be recalc inside the slot. Right now if there are only 2 slots left, the rotation puts them om 0 and 360 deg
 	*/
 	import { onMount } from 'svelte'
 	import { shapes } from './stores.js';
@@ -32,6 +29,7 @@
 
 	//Reactive var that checks if a new shape is needed in the menu
 	$: newShapeNeeded = $shapes[$shapes.length -1].slot != null ? freshShape(): console.log("not needed")
+	$: maxSlotID = Math.max(...slots.map(s => s.id))
 
 	//Create a fresh shape and add it to the shapes store
 	function freshShape(){
@@ -56,13 +54,12 @@
 		$shapes[$shapes.length-1].text = currentWord
 	}
 	//Check if a slot can be removed, if not, call self with prev slot
-	//TODO: if no slot can be safely removed, alert user
-	// Ah this wont work with just empty values in an array, slots will need to be a bit more complex
 	function removeSlot(index){
 		console.log("remove called with", index, slots)
 		if (slots[index].shape === null){
 			console.log(index, 'safe to remove')
 			slots.splice(index, 1)
+			console.log(slots)
 			slots = slots
 		} else {
 			index > 0 ? removeSlot(--index) : console.log("no slots can be removed")
@@ -99,16 +96,16 @@
 	<h1>Shape</h1>
 	{#each $shapes.filter(s => s.slot === null) as shape (shape.id)}
 		<Shape
-			thisShape={shape}
+			shapeData={shape}
 		/>
 	{/each}
 </section>
 <section class='content'>
 	<h1 class='status'>{status}</h1>
 	<div class = slotsContainer>
-		{#each slots as slot}
+		{#each slots as slot (slot.id)}
 			<Slot
-				thisSlot={slot}
+				slotData={slot}
 				slots={slots}
 				bind:status={status}
 				filled={$shapes.find(s => s.slot == slot.id) !== undefined}
@@ -116,13 +113,13 @@
 			>
 				{#if $shapes.find(s => s.slot == slot.id)}
 					<Shape 
-						thisShape={$shapes.find(s => s.slot == slot.id)}
+						shapeData={$shapes.find(s => s.slot == slot.id)}
 					/>
 				{/if}
 			</Slot>
 		{/each}
 	</div>
-	<div id="addSlotBtn" on:click="{e => {slots = slots.concat({ id: slots.length, shape: null }); console.log(slots)}}">Add slot</div>
+	<div id="addSlotBtn" on:click="{e => {slots = slots.concat({ id: maxSlotID +1, shape: null }); console.log(slots)}}">Add slot</div>
 	<div id="removeSlotBtn" on:click={removeSlot(slots.length-1)}>Remove slot</div>
 </section>
 

@@ -1,6 +1,6 @@
 <script>
 	export let id = -1
-	export let thisShape 
+	export let shapeData 
 
 	function dragstart(ev) {
   	// Add the target element's id to the data transfer object
@@ -13,12 +13,12 @@
 <input 
 	type=text
 	draggable="true"
-	id = {thisShape.id}
+	id = {shapeData.id}
 	class='shapes'
-	class:positioned={thisShape.slot !== null}
+	class:positioned={shapeData.slot !== null}
 	on:dragstart={dragstart} 
-	bind:value={thisShape.text}
-	on:change="{e => thisShape.text = thisShape.text}" 
+	bind:value={shapeData.text}
+	on:change="{e => shapeData.text = shapeData.text}" 
 >
 
 <style>

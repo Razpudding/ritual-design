@@ -1,6 +1,6 @@
 <script>
   import { shapes } from './stores.js'
-  export let thisSlot
+  export let slotData
   export let slots
   export let status
   export let filled = false
@@ -19,14 +19,14 @@
       duplicate.shape = null
     } 
     //Bind the slot to the shape and visa versa
-    thisSlot.shape = myShape.id
-    myShape.slot = thisSlot.id
+    slotData.shape = myShape.id
+    myShape.slot = slotData.id
     console.log($shapes)
     console.log(slots)
     //TODO: check if slots needs to be updated here?
     slots = slots
     $shapes = $shapes
-    status = ("You dropped " + element_id + " into drop zone " + thisSlot.id)
+    status = ("You dropped " + element_id + " into drop zone " + slotData.id)
     filled = true
   }
 
@@ -42,7 +42,7 @@
 <div style="--rot: {rotation}"
 	on:drop={handleDragDrop} 
   on:dragover={handleDragOver}
-  id={thisSlot.id}
+  id={slotData.id}
   class="slot"
   class:filled={filled}
 >
