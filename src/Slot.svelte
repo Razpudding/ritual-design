@@ -5,7 +5,6 @@
   export let status
   export let filled = false
   export let rotation = '20deg'
-
   //On drop, find the id of the shape dropped and update that shape to reflect this slot
 	function handleDragDrop(e) {
     e.preventDefault()
@@ -13,9 +12,9 @@
         .dataTransfer
         .getData("text")
     const myShape = $shapes.find(shape => shape.id == element_id)
+    //If the shape was dropped from another slot, clear that slot
     const duplicate = slots.find(s => s.shape == myShape.id)
     if (duplicate){
-      console.log("duplicate found", duplicate)
       duplicate.shape = null
     } 
     //Bind the slot to the shape and visa versa
@@ -28,6 +27,14 @@
     $shapes = $shapes
     status = ("You dropped " + element_id + " into drop zone " + slotData.id)
     filled = true
+  }
+
+  //Calculate if a slots shape needs to be rotated
+  //If the slot's rotation >90 and smaller than 270 and the slot is filled, update shapedata so the shape knows to rotate
+  $: if (filled){
+    console.log("myrot", rotation)
+    const myShape = $shapes.find(shape => shape.slot == slotData.id)
+    myShape.rotated = (parseInt(rotation, 10) >= 90 && parseInt(rotation, 10) < 270)
   }
 
   function handleDragOver(e) {

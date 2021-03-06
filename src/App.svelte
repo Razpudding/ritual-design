@@ -2,7 +2,6 @@
 	/*
 	* TODO: 
 	* Add color change option
-	* add random option: should be a separate little button with a symbol next to the dropdown
 	* Write a proper readme
 	* Remove logic that expect multiple shapes in the menu and multiple per slot
 	* A slot should be cleared when a shape is dragged out of it :()
@@ -15,7 +14,7 @@
 	import Dropdown from './Dropdown.svelte'
 	import {loadData, generateText} from './dataHandler.js'
 	//Initialize variables
-	$shapes.push({	type: 'rect', id: 0, slot: null, text:"" })
+	$shapes.push({	type: 'rect', id: 0, slot: null, text:"", rotated:false })
 	let slots = []
 	for (let i = 0; i < 5; i ++){
 		slots.push({ id: i+1, shape: null })
@@ -27,8 +26,8 @@
 	let currentWord = ''
 	let status = 'Start dragging'
 
-	//Reactive var that checks if a new shape is needed in the menu
-	$: newShapeNeeded = $shapes[$shapes.length -1].slot != null ? freshShape(): console.log("not needed")
+	//Reactive code that checks if a new shape is needed in the menu
+	$: if($shapes[$shapes.length -1].slot != null){ freshShape() }
 	$: maxSlotID = Math.max(...slots.map(s => s.id))
 
 	//Create a fresh shape and add it to the shapes store
@@ -37,6 +36,7 @@
 		newShape.slot = null
 		newShape.id += 1
 		newShape.text = (currentWord == ''? currentCategory : currentWord)
+		newShape.rotated = false
 		$shapes = $shapes.concat(newShape)
 	}
 	function changeCategory(e){
@@ -66,12 +66,13 @@
 		}
 	}
 
-	function randomCat(){
+	//Select a random category and dispatch a change event on the select
+	function randomOption(target){
+		console.log(target)
 		const event = new Event("change")
-		const sel = document.getElementById("dropdownCat")
-		const options = sel.children;  
-		const random  = Math.floor(Math.random() * options.length);
-		sel.value = options[random].value; 
+		const sel = document.getElementById(target)
+		const options = sel.children
+		sel.value = options[Math.floor(Math.random() * options.length)].value; 
 		sel.dispatchEvent(event)
 	}
 	//Load the word data and set variables
@@ -96,13 +97,14 @@
 		on:selection={changeCategory}
 		id='dropdownCat'
 	/>
-	<button on:click={randomCat}>🔀</button>
+	<button class='float' on:click={() => randomOption("dropdownCat")}>🔀</button>
 	<Dropdown
 		title='Word'
 		options={words[currentCategory]}
 		on:selection={changeWord}
 		id='dropdownWord'
 	/>
+	<button on:click={() => randomOption("dropdownWord")}>🔀</button>
 	<h1>Shape</h1>
 	{#each $shapes.filter(s => s.slot === null) as shape (shape.id)}
 		<Shape

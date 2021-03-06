@@ -13,7 +13,6 @@
       text: selected
     })
   }
-  
 </script>
 
 <div>
@@ -26,5 +25,7 @@
 </div>
 
 <style>
-
+  select {
+    float: left;
+  }
 </style>

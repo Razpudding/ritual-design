@@ -1,7 +1,6 @@
 <script>
 	export let id = -1
 	export let shapeData 
-
 	function dragstart(ev) {
   	// Add the target element's id to the data transfer object
   	console.log("dragging", id)
@@ -16,6 +15,7 @@
 	id = {shapeData.id}
 	class='shapes'
 	class:positioned={shapeData.slot !== null}
+	class:rotate={shapeData.rotated}
 	on:dragstart={dragstart} 
 	bind:value={shapeData.text}
 	on:change="{e => shapeData.text = shapeData.text}" 
@@ -35,5 +35,9 @@
   .positioned {
   	width: 100%;
   	height: 100%;
+  }
+
+  .rotate {
+		transform: rotate(-180deg);
   }
 </style>
