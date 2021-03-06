@@ -2,7 +2,7 @@
 	/*
 	* TODO: 
 	* Add color change option
-	* add random option, 
+	* add random option: should be a separate little button with a symbol next to the dropdown
 	* Write a proper readme
 	* Remove logic that expect multiple shapes in the menu and multiple per slot
 	* A slot should be cleared when a shape is dragged out of it :()
@@ -40,7 +40,7 @@
 		$shapes = $shapes.concat(newShape)
 	}
 	function changeCategory(e){
-		console.log("changing cat to", e.detail.text)
+		console.log("changing cat to", e.detail)
 		currentCategory = e.detail.text
 		currentWord = words[currentCategory][0]
 		$shapes[$shapes.length-1].text = currentWord
@@ -65,6 +65,15 @@
 			index > 0 ? removeSlot(--index) : console.log("no slots can be removed")
 		}
 	}
+
+	function randomCat(){
+		const event = new Event("change")
+		const sel = document.getElementById("dropdownCat")
+		const options = sel.children;  
+		const random  = Math.floor(Math.random() * options.length);
+		sel.value = options[random].value; 
+		sel.dispatchEvent(event)
+	}
 	//Load the word data and set variables
 	onMount(async () => {
 		const wordData = await loadData('assets/taxonomy_0.csv')
@@ -87,6 +96,7 @@
 		on:selection={changeCategory}
 		id='dropdownCat'
 	/>
+	<button on:click={randomCat}>🔀</button>
 	<Dropdown
 		title='Word'
 		options={words[currentCategory]}
