@@ -16,7 +16,7 @@
 </script>
 
 <div>
-  <h1>{title}</h1>
+  <h1 class=clearBoth>{title}</h1>
   <select id={id} bind:value={selected} on:change={makeSelection}>
     {#each options as option}
       <option value={option}>{option}
@@ -27,5 +27,8 @@
 <style>
   select {
     float: left;
+  }
+  .clearBoth {
+    clear:both;
   }
 </style>

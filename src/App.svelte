@@ -1,11 +1,11 @@
 <script>
 	/*
 	* TODO: 
-	* Add color change option
-	* Write a proper readme
-	* Remove logic that expect multiple shapes in the menu and multiple per slot
-	* A slot should be cleared when a shape is dragged out of it :()
-	* Slots need to be re-rotated when one is removed? Could be recalc inside the slot. Right now if there are only 2 slots left, the rotation puts them om 0 and 360 deg
+	* 	Add color change option
+	* 	Write a proper readme
+	* 	Remove logic that expect multiple shapes in the menu and multiple per slot
+	* BUG:
+	* 	Right now if there are only 2 slots left, the rotation puts them om 0 and 360 deg
 	*/
 	import { onMount } from 'svelte'
 	import { shapes } from './stores.js';
@@ -97,15 +97,15 @@
 		on:selection={changeCategory}
 		id='dropdownCat'
 	/>
-	<button class='float' on:click={() => randomOption("dropdownCat")}>🔀</button>
+	<button class='float-right' on:click={() => randomOption("dropdownCat")}>🔀</button>
 	<Dropdown
 		title='Word'
 		options={words[currentCategory]}
 		on:selection={changeWord}
 		id='dropdownWord'
 	/>
-	<button on:click={() => randomOption("dropdownWord")}>🔀</button>
-	<h1>Shape</h1>
+	<button class='float-right' on:click={() => randomOption("dropdownWord")}>🔀</button>
+	<h1 class='clearBoth'>Shape</h1>
 	{#each $shapes.filter(s => s.slot === null) as shape (shape.id)}
 		<Shape
 			shapeData={shape}
@@ -168,6 +168,14 @@
 		font-weight: 100;
 		visibility: hidden;
 	}
+
+	.float-right {
+		float: right; 
+	}
+
+	.clearBoth {
+    clear: both;
+  }
 
 	#addSlotBtn {
 		position: absolute;
