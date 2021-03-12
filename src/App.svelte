@@ -1,9 +1,9 @@
 <script>
 	/*
 	* TODO: 
+	*		Turn elements into components: random button
 	* 	Add color change option
 	* 	Write a proper readme
-	* 	Remove logic that expect multiple shapes in the menu and multiple per slot
 	* BUG:
 	* 	Right now if there are only 2 slots left, the rotation puts them om 0 and 360 deg
 	*/
@@ -65,10 +65,8 @@
 			index > 0 ? removeSlot(--index) : console.log("no slots can be removed")
 		}
 	}
-
 	//Select a random category and dispatch a change event on the select
 	function randomOption(target){
-		console.log(target)
 		const event = new Event("change")
 		const sel = document.getElementById(target)
 		const options = sel.children
@@ -106,11 +104,9 @@
 	/>
 	<button class='float-right' on:click={() => randomOption("dropdownWord")}>🔀</button>
 	<h1 class='clearBoth'>Shape</h1>
-	{#each $shapes.filter(s => s.slot === null) as shape (shape.id)}
-		<Shape
-			shapeData={shape}
-		/>
-	{/each}
+	<Shape
+		shapeData={$shapes.filter(s => s.slot === null)[0]}
+	/>	
 </section>
 <section class='content'>
 	<h1 class='status'>{status}</h1>
