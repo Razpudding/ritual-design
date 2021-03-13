@@ -4,6 +4,7 @@
 	*		Turn elements into components: random button
 	* 	Add color change option
 	* 	Write a proper readme
+	*		Add circle to the middle
 	* BUG:
 	* 	Right now if there are only 2 slots left, the rotation puts them om 0 and 360 deg
 	*/
@@ -127,6 +128,13 @@
 			</Slot>
 		{/each}
 	</div>
+	<div id="circleEl">
+		<input
+			id='centerText'
+			type=text
+			on:change="" 
+		>
+	</div>
 	<div id="addSlotBtn" on:click="{e => {slots = slots.concat({ id: maxSlotID +1, shape: null }); console.log(slots)}}">Add slot</div>
 	<div id="removeSlotBtn" on:click={removeSlot(slots.length-1)}>Remove slot</div>
 </section>
@@ -172,7 +180,24 @@
 	.clearBoth {
     clear: both;
   }
-
+  #circleEl {
+    background: lightblue;
+    border-radius: 50%;
+    position: absolute;
+    top: 53%;
+    left: 61%;
+    width: 8em;
+    height: 8em;
+	}
+	#centerText {
+		width: 80%;
+		position: relative;
+		top: 40%;
+		left: 10%;
+		background-color: transparent;
+		font-weight: bolder;
+	}
+	
 	#addSlotBtn {
 		position: absolute;
   	bottom: 1em;
