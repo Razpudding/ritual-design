@@ -16,12 +16,13 @@
 	import Dropdown from './Dropdown.svelte'
 	import {loadData, generateText} from './dataHandler.js'
 	//Initialize variables
-	$shapes.push({	type: 'rect', id: 0, slot: null, text:"", rotated:false })
+	
 	let slots = []
 	for (let i = 0; i < 5; i ++){
 		slots.push({ id: i+1, shape: null })
 	}
-
+	let shapeColor = '#fddb5d'
+	$shapes.push({	type: 'rect', id: 0, slot: null, text:"", rotated:false, color:shapeColor })
 	let categories = []
 	let words = [[]]
 	let currentCategory = 0
@@ -97,20 +98,22 @@
 		on:selection={changeCategory}
 		id='dropdownCat'
 	/>
-	<button class='float-right' on:click={() => randomOption("dropdownCat")}>🔀</button>
+	<button class='float-right w25' on:click={() => randomOption("dropdownCat")}>🔀</button>
 	<Dropdown
 		title='Word'
 		options={words[currentCategory]}
 		on:selection={changeWord}
 		id='dropdownWord'
 	/>
-	<button class='float-right' on:click={() => randomOption("dropdownWord")}>🔀</button>
+	<button class='float-right w25' on:click={() => randomOption("dropdownWord")}>🔀</button>
 	<h1 class='clearBoth'>Shape</h1>
 	<Shape
 		shapeData={$shapes.filter(s => s.slot === null)[0]}
 	/>
-
+  <input type="color" id="colorPicker" class='float-right w25' name="color picker" value="#fddb5d"
+  	on:input={e => $shapes[$shapes.length-1].color = e.target.value}>
 </section>
+
 <section class='content'>
 	<h1 class='status'>{status}</h1>
 	<div class = slotsContainer>
@@ -154,19 +157,16 @@
 		padding: 1em;
 		clear: left;
 	}
-
 	.content {
 		width: 70%;
 		float: right;
 		margin: auto;
 	}
-
   .slotsContainer {
 		position: relative;
 		width: 100%;
 		height: 100%;
   }
-
   .status {
 		color: #ff3e00;
 		text-transform: uppercase;
@@ -174,24 +174,16 @@
 		font-weight: 100;
 		visibility: hidden;
 	}
-
 	.float-right {
 		float: right; 
 	}
-
 	.clearBoth {
     clear: both;
   }
-  #_circleEl {
-    background: lightblue;
-    border-radius: 50%;
-    position: absolute;
-    top: 53%;
-    left: 61%;
-    width: 8em;
-    height: 8em;
-	}
 
+  .w25 {
+  	width: 25%;
+  }
   #circleEl {
   	position: relative;
     background: lightblue;
@@ -209,8 +201,8 @@
 		left: 10%;
 		background-color: transparent;
 		font-weight: bolder;
+		text-align: center;
 	}
-	
 	#addSlotBtn {
 		position: absolute;
   	bottom: 1em;
@@ -219,5 +211,10 @@
 		position: absolute;
   	bottom: 1em;
   	right: 1em;
+	}
+	#colorPicker {
+		padding: 0;
+		margin: 0;
+		height: 2em;
 	}
 </style>

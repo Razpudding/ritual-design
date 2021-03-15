@@ -13,17 +13,18 @@
 	type=text
 	draggable="true"
 	id = {shapeData.id}
-	class='shapes'
+	class='shape'
 	class:positioned={shapeData.slot !== null}
 	class:rotate={shapeData.rotated}
 	on:dragstart={dragstart} 
 	bind:value={shapeData.text}
+	style="--bg: {shapeData.color}"
 	on:change="{e => shapeData.text = shapeData.text}" 
 >
 
 <style>
-  .shapes {
-    background-color: #FFF3CC;
+  .shape {
+    background-color: var(--bg);
     border-bottom: #DFBC6A 1px solid;
     padding: .3em;
     font-size: 1.2em;
