@@ -4,9 +4,10 @@
 	*		Turn elements into components: random button
 	* 	Add color change option
 	* 	Write a proper readme
-	*		Add circle to the middle
+	*		If center text matches a category do something?
 	* BUG:
 	* 	Right now if there are only 2 slots left, the rotation puts them om 0 and 360 deg
+	*		You can drop two shapes in one slot -.-
 	*/
 	import { onMount } from 'svelte'
 	import { shapes } from './stores.js';
@@ -107,7 +108,8 @@
 	<h1 class='clearBoth'>Shape</h1>
 	<Shape
 		shapeData={$shapes.filter(s => s.slot === null)[0]}
-	/>	
+	/>
+
 </section>
 <section class='content'>
 	<h1 class='status'>{status}</h1>
@@ -180,7 +182,7 @@
 	.clearBoth {
     clear: both;
   }
-  #circleEl {
+  #_circleEl {
     background: lightblue;
     border-radius: 50%;
     position: absolute;
@@ -188,6 +190,17 @@
     left: 61%;
     width: 8em;
     height: 8em;
+	}
+
+  #circleEl {
+  	position: relative;
+    background: lightblue;
+    border-radius: 50%;
+    width: 8em;
+    height: 8em;
+    margin: auto;
+    bottom: 2.5em;
+    left: .3em;
 	}
 	#centerText {
 		width: 80%;
