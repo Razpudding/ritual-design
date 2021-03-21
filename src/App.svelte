@@ -2,9 +2,11 @@
 	/*
 	* TODO: 
 	*		Turn elements into components: random button
-	* 	Add color change option
 	* 	Write a proper readme
-	*		If center text matches a category do something?
+	* 	Make shapes that are already placed deleteable
+	*		You should be able to drag a word to the middle
+	*		Automatically resize all words (to same size) when word word is too long to fit
+	*		Circle in the middle should touch edges of cards (make bigger)
 	* BUG:
 	* 	Right now if there are only 2 slots left, the rotation puts them om 0 and 360 deg
 	*		You can drop two shapes in one slot -.-
@@ -15,7 +17,6 @@
 	import Slot from './Slot.svelte'
 	import Dropdown from './Dropdown.svelte'
 	import {loadData, generateText} from './dataHandler.js'
-	//Initialize variables
 	
 	let slots = []
 	for (let i = 0; i < 5; i ++){
@@ -27,7 +28,6 @@
 	let words = [[]]
 	let currentCategory = 0
 	let currentWord = ''
-	let status = 'Start dragging'
 
 	//Reactive code that checks if a new shape is needed in the menu
 	$: if($shapes[$shapes.length -1].slot != null){ freshShape() }
@@ -115,13 +115,11 @@
 </section>
 
 <section class='content'>
-	<h1 class='status'>{status}</h1>
-	<div class = slotsContainer>
+	<div class='slotsContainer'>
 		{#each slots as slot (slot.id)}
 			<Slot
 				slotData={slot}
 				slots={slots}
-				bind:status={status}
 				filled={$shapes.find(s => s.slot == slot.id) !== undefined}
 				rotation={(slot.id -1)*(360/slots.length)+'deg'}
 			>
@@ -166,14 +164,8 @@
 		position: relative;
 		width: 100%;
 		height: 100%;
+		margin-top: 30%;
   }
-  .status {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-		visibility: hidden;
-	}
 	.float-right {
 		float: right; 
 	}

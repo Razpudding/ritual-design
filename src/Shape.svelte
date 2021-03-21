@@ -1,16 +1,13 @@
 <script>
-	export let id = -1
 	export let shapeData 
 	function dragstart(ev) {
   	// Add the target element's id to the data transfer object
-  	console.log("dragging", id)
   	ev.dataTransfer
        .setData("text", ev.target.getAttribute('id'));
 	}
 </script>
 
 <input 
-	type=text
 	draggable="true"
 	id = {shapeData.id}
 	class='shape'
@@ -31,6 +28,14 @@
     text-align: center;
     box-shadow: 2px 2px 2px #999;
     cursor: move;
+  }
+
+  .triangle {
+      width: 0;
+      height: 0;
+      border-left: 40px solid transparent;
+      border-right: 40px solid transparent;
+      border-bottom: 80px solid lightblue;
   }
 
   .positioned {

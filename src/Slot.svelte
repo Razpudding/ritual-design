@@ -2,7 +2,6 @@
   import { shapes } from './stores.js'
   export let slotData
   export let slots
-  export let status
   export let filled = false
   export let rotation = '20deg'
   //On drop, find the id of the shape dropped and update that shape to reflect this slot
@@ -25,7 +24,6 @@
     //TODO: check if slots needs to be updated here?
     slots = slots
     $shapes = $shapes
-    status = ("You dropped " + element_id + " into drop zone " + slotData.id)
     filled = true
   }
 
