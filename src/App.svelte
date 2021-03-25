@@ -130,13 +130,13 @@
 				{/if}
 			</Slot>
 		{/each}
-	</div>
-	<div id="circleEl">
-		<input
-			id='centerText'
-			type=text
-			on:change="" 
-		>
+		<div id="circleEl">
+			<input
+				id='centerText'
+				type=text
+				on:change="" 
+			>
+		</div>
 	</div>
 	<div id="addSlotBtn" on:click="{e => {slots = slots.concat({ id: maxSlotID +1, shape: null }); console.log(slots)}}">Add slot</div>
 	<div id="removeSlotBtn" on:click={removeSlot(slots.length-1)}>Remove slot</div>
@@ -151,12 +151,13 @@
 		top: 0;
 		left: 0;
 		background-color: lightgreen; 
-		overflow-x: hidden; /* Disable horizontal scroll */
+		overflow-x: hidden;
 		padding: 1em;
 		clear: left;
 	}
 	.content {
 		width: 70%;
+		height: 100%;
 		float: right;
 		margin: auto;
 	}
@@ -180,11 +181,10 @@
   	position: relative;
     background: lightblue;
     border-radius: 50%;
-    width: 8em;
-    height: 8em;
+    width: 21%;
+    height: 25%;
     margin: auto;
-    bottom: 2.5em;
-    left: .3em;
+    bottom: 9%;
 	}
 	#centerText {
 		width: 80%;
