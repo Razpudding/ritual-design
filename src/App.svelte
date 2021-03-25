@@ -9,6 +9,8 @@
 	*		Circle in the middle should touch edges of cards (make bigger)
 	* BUG:
 	* 	Right now if there are only 2 slots left, the rotation puts them om 0 and 360 deg
+	*			Might have to do witht he fact that when you delete a shape, the ID does not become
+	*			available again
 	*		You can drop two shapes in one slot -.-
 	*/
 	import { onMount } from 'svelte'
@@ -16,6 +18,7 @@
 	import Shape from './Shape.svelte'
 	import Slot from './Slot.svelte'
 	import Dropdown from './Dropdown.svelte'
+	import RemoveShape from './RemoveShape.svelte'
 	import {loadData, generateText} from './dataHandler.js'
 	
 	let slots = []
@@ -30,16 +33,20 @@
 	let currentWord = ''
 
 	//Reactive code that checks if a new shape is needed in the menu
-	$: if($shapes[$shapes.length -1].slot != null){ freshShape() }
+	$: if($shapes.length == 0 || $shapes[$shapes.length -1].slot != null) { freshShape() }
 	$: maxSlotID = Math.max(...slots.map(s => s.id))
+	$: maxShapeID = Math.max(...$shapes.map(s => s.id))
 
 	//Create a fresh shape and add it to the shapes store
 	function freshShape(){
-		const newShape = {...$shapes[$shapes.length -1]}
-		newShape.slot = null
-		newShape.id += 1
-		newShape.text = (currentWord == ''? currentCategory : currentWord)
-		newShape.rotated = false
+		const newShape = {
+			type: 'rect',
+			slot: null,
+			id:  maxShapeID + 1,
+			text: (currentWord == ''? currentCategory : currentWord),
+			rotated: false,
+			color: shapeColor,
+		}
 		$shapes = $shapes.concat(newShape)
 	}
 	function changeCategory(e){
@@ -138,8 +145,9 @@
 			>
 		</div>
 	</div>
-	<div id="addSlotBtn" on:click="{e => {slots = slots.concat({ id: maxSlotID +1, shape: null }); console.log(slots)}}">Add slot</div>
-	<div id="removeSlotBtn" on:click={removeSlot(slots.length-1)}>Remove slot</div>
+	<RemoveShape slots={slots}/>
+	<div id="addSlotBtn" class="button" on:click="{e => {slots = slots.concat({ id: maxSlotID +1, shape: null }); console.log(slots)}}">Add slot</div>
+	<div id="removeSlotBtn" class="button" on:click={removeSlot(slots.length-1)}>Remove slot</div>
 </section>
 
 <style>
@@ -173,10 +181,23 @@
 	.clearBoth {
     clear: both;
   }
-
   .w25 {
   	width: 25%;
   }
+
+  .button {
+    width: 5em;
+    margin: auto;
+    color:#444;
+    border:1px solid #CCC;
+    cursor: pointer;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    vertical-align:middle;
+    padding: 5px;
+    text-align: center;
+  }
+
   #circleEl {
   	position: relative;
     background: lightblue;
@@ -196,11 +217,9 @@
 		text-align: center;
 	}
 	#addSlotBtn {
-		position: absolute;
   	bottom: 1em;
 	}
 	#removeSlotBtn {
-		position: absolute;
   	bottom: 1em;
   	right: 1em;
 	}
