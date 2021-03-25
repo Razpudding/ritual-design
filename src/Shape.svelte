@@ -1,9 +1,13 @@
 <script>
+	import fontColorContrast from 'font-color-contrast'
 	export let shapeData 
 	function dragstart(ev) {
   	// Add the target element's id to the data transfer object
   	ev.dataTransfer
        .setData("text", ev.target.getAttribute('id'));
+	}
+	function textColor(color){
+		return fontColorContrast(color) === "#ffffff"
 	}
 </script>
 
@@ -13,6 +17,7 @@
 	class='shape'
 	class:positioned={shapeData.slot !== null}
 	class:rotate={shapeData.rotated}
+	class:whiteText={textColor(shapeData.color)}
 	on:dragstart={dragstart} 
 	bind:value={shapeData.text}
 	style="--bg: {shapeData.color}"
@@ -45,5 +50,9 @@
 
   .rotate {
 		transform: rotate(-180deg);
+  }
+
+  .whiteText {
+  	color: white;
   }
 </style>
