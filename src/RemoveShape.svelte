@@ -13,7 +13,8 @@
     const duplicate = slots.find(s => s.shape == element_id)
     if (duplicate){
       duplicate.shape = null
-    } 
+    }
+    slots = slots
     //Delete the dropped shape from the shapedata
     $shapes = $shapes.filter(s => s.id != element_id)
   }

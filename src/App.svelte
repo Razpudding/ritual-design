@@ -3,7 +3,6 @@
 	* TODO: 
 	*		Turn elements into components: random button
 	* 	Write a proper readme
-	* 	Make shapes that are already placed deleteable
 	*		You should be able to drag a word to the middle
 	*		Automatically resize all words (to same size) when word word is too long to fit
 	*		Circle in the middle should touch edges of cards (make bigger)
@@ -14,6 +13,7 @@
 	import { shapes } from './stores.js';
 	import Shape from './Shape.svelte'
 	import Slot from './Slot.svelte'
+	import CenterSlot from './CenterSlot.svelte'
 	import Dropdown from './Dropdown.svelte'
 	import RemoveShape from './RemoveShape.svelte'
 	import {loadData, generateText} from './dataHandler.js'
@@ -138,13 +138,7 @@
 				{/if}
 			</Slot>
 		{/each}
-		<div id="circleEl">
-			<input
-				id='centerText'
-				type=text
-				on:change="" 
-			>
-		</div>
+		<CenterSlot slots={slots}/>
 	</div>
 	<RemoveShape slots={slots}/>
 	<div id="addSlotBtn" class="button" on:click="{e => {slots = slots.concat({ id: maxSlotID +1, shape: null }); console.log(slots)}}">Add slot</div>
@@ -201,25 +195,6 @@
     text-align: center;
     position: absolute;
   }
-
-  #circleEl {
-  	position: relative;
-    background: lightblue;
-    border-radius: 50%;
-    width: 21%;
-    height: 25%;
-    margin: auto;
-    bottom: 9%;
-	}
-	#centerText {
-		width: 80%;
-		position: relative;
-		top: 40%;
-		left: 10%;
-		background-color: transparent;
-		font-weight: bolder;
-		text-align: center;
-	}
 	#addSlotBtn {
   	bottom: 1em;
 	}

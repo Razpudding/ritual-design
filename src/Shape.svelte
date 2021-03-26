@@ -22,6 +22,7 @@
 	bind:value={shapeData.text}
 	style="--bg: {shapeData.color}"
 	on:change="{e => shapeData.text = shapeData.text}" 
+	autocomplete="off"
 >
 
 <style>
