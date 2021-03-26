@@ -3,11 +3,11 @@
 	* TODO: 
 	*		Turn elements into components: random button
 	* 	Write a proper readme
-	*		You should be able to drag a word to the middle
 	*		Automatically resize all words (to same size) when word word is too long to fit
 	*		Circle in the middle should touch edges of cards (make bigger)
+	*		Implement material components to improve the styling
+	* 	Use modals for important action checks like saving or deleting design (https://github.com/flekschas/svelte-simple-modal)
 	* BUG:
-	*		You can drop two shapes in one slot -.-
 	*/
 	import { onMount } from 'svelte'
 	import { shapes } from './stores.js';
@@ -29,7 +29,7 @@
 	let currentCategory = 0
 	let currentWord = ''
 
-	//Reactive code that checks if a new shape is needed in the menu
+	//Create a new shape if the last shape is already placed in a slot
 	$: if($shapes.length == 0 || $shapes[$shapes.length -1].slot != null) { freshShape() }
 	$: maxSlotID = Math.max(...slots.map(s => s.id))
 	$: maxShapeID = Math.max(...$shapes.map(s => s.id))
@@ -47,30 +47,24 @@
 		$shapes = $shapes.concat(newShape)
 	}
 	function changeCategory(e){
-		console.log("changing cat to", e.detail)
 		currentCategory = e.detail.text
 		currentWord = words[currentCategory][0]
 		$shapes[$shapes.length-1].text = currentWord
 		//Overwrite the selected value of the word selector
 		document.getElementById('dropdownWord').options[0].selected = true
-		console.log("changing word to", currentWord)
 	}
 	function changeWord(e){
-		console.log("changing word to", e.detail.text)
 		currentWord = e.detail.text
 		$shapes[$shapes.length-1].text = currentWord
 	}
 	//Check if a slot can be removed, if not, call self with prev slot
 	function removeSlot(index){
-		console.log("remove called with", index, slots)
 		if (slots.length > 1){
 			if (slots[index].shape === null){
-				console.log(index, 'safe to remove')
 				slots.splice(index, 1)
-				console.log(slots)
 				slots = slots
 			} else {
-				index > 0 ? removeSlot(--index) : console.log("no slots can be removed")
+				index > 0 ? removeSlot(--index) : console.log("no slots are empty")
 			}
 		} else {
 			console.log("can't remove last slot")
@@ -138,10 +132,10 @@
 				{/if}
 			</Slot>
 		{/each}
-		<CenterSlot slots={slots}/>
+		<CenterSlot/>
 	</div>
 	<RemoveShape slots={slots}/>
-	<div id="addSlotBtn" class="button" on:click="{e => {slots = slots.concat({ id: maxSlotID +1, shape: null }); console.log(slots)}}">Add slot</div>
+	<div id="addSlotBtn" class="button" on:click="{e => {slots = slots.concat({ id: maxSlotID +1, shape: null })}}">Add slot</div>
 	<div id="removeSlotBtn" class="button" on:click={removeSlot(slots.length-1)}>Remove slot</div>
 </section>
 

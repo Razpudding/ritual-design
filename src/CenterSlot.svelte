@@ -1,6 +1,5 @@
 <script>
   import { shapes } from './stores.js'
-  export let slots
   let centerText = ''
 
   function handleDragDrop(e) {

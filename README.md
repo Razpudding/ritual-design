@@ -1,7 +1,7 @@
 # ritual-design
 A tool I'm building to help an artist design rituals
 
-## Resources
+## Useful Resources
 - Better way to use CSS to create geometrical shapes on [freecodecamp](https://www.freecodecamp.org/news/css-shapes-explained-how-to-draw-a-circle-triangle-and-more-using-pure-css/)
 - [CouchDB](https://docs.couchdb.org/en/stable/intro/index.html) as a lightweight db solution
 - [JSONbin.io](https://jsonbin.io/) as a lightweight db solution. [Update json through API](https://jsonbin.io/api-reference/v3/bins/update).
@@ -9,6 +9,15 @@ A tool I'm building to help an artist design rituals
     + Start with json objects in server memory
     + Set up MongoDB as a database
     + Transform data mutation logic to MongoDB
+
+## Svelte Resources
+- [Cheatsheet](https://sveltesociety.dev/cheatsheet/)
+- [Components](https://sveltesociety.dev/components/)
+- [Blog](https://svelte.dev/blog)
+- [Tutorial](https://svelte.dev/tutorial/basics)
+- [Examples](https://svelte.dev/examples#7guis-crud)
+- [REPL sandbox](https://svelte.dev/repl/hello-world?version=3.35.0)
+- [Material components](https://github.com/hperrin/svelte-material-ui)
 
 ## Data structure
 Some options for reflecting the data of designs
