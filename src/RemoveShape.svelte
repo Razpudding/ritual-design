@@ -36,10 +36,13 @@
     margin: auto;
     color:#444;
     border:1px dotted #CCC;
-    background:#df3131;
+    background:#fc7a5d;
     box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
     vertical-align:middle;
     padding: 5px;
     text-align: center;
+    position: absolute;
+    bottom: 1em;
+    left: 50%;
   }
 </style>

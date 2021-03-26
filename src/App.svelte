@@ -155,13 +155,15 @@
 	.menu {
 		height: 100%;
 		width: 25%;
-		position: fixed;
+		position: absolute;
 		z-index: 1;
 		top: 0;
 		left: 0;
 		background-color: lightgreen; 
 		overflow-x: hidden;
-		padding: 1em;
+		padding-top: 10%;
+		padding-left: 1em;
+		padding-right: 1em;
 		clear: left;
 	}
 	.content {
@@ -197,6 +199,7 @@
     vertical-align:middle;
     padding: 5px;
     text-align: center;
+    position: absolute;
   }
 
   #circleEl {
