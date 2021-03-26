@@ -8,9 +8,6 @@
 	*		Automatically resize all words (to same size) when word word is too long to fit
 	*		Circle in the middle should touch edges of cards (make bigger)
 	* BUG:
-	* 	Right now if there are only 2 slots left, the rotation puts them om 0 and 360 deg
-	*			Might have to do witht he fact that when you delete a shape, the ID does not become
-	*			available again
 	*		You can drop two shapes in one slot -.-
 	*/
 	import { onMount } from 'svelte'
@@ -66,13 +63,17 @@
 	//Check if a slot can be removed, if not, call self with prev slot
 	function removeSlot(index){
 		console.log("remove called with", index, slots)
-		if (slots[index].shape === null){
-			console.log(index, 'safe to remove')
-			slots.splice(index, 1)
-			console.log(slots)
-			slots = slots
+		if (slots.length > 1){
+			if (slots[index].shape === null){
+				console.log(index, 'safe to remove')
+				slots.splice(index, 1)
+				console.log(slots)
+				slots = slots
+			} else {
+				index > 0 ? removeSlot(--index) : console.log("no slots can be removed")
+			}
 		} else {
-			index > 0 ? removeSlot(--index) : console.log("no slots can be removed")
+			console.log("can't remove last slot")
 		}
 	}
 	//Select a random category and dispatch a change event on the select
@@ -123,12 +124,12 @@
 
 <section class='content'>
 	<div class='slotsContainer'>
-		{#each slots as slot (slot.id)}
+		{#each slots as slot, i (slot.id)}
 			<Slot
 				slotData={slot}
 				slots={slots}
 				filled={$shapes.find(s => s.slot == slot.id) !== undefined}
-				rotation={(slot.id -1)*(360/slots.length)+'deg'}
+				rotation={i*(360/slots.length)+'deg'}
 			>
 				{#if $shapes.find(s => s.slot == slot.id)}
 					<Shape 

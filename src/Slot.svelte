@@ -51,7 +51,7 @@
   class="slot"
   class:filled={filled}
 >
-  <slot></slot>
+  <slot style="--rot: {rotation}"></slot>
 </div>
 
 <style>
