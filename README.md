@@ -16,6 +16,7 @@ A tool I'm building to help an artist design rituals
 - [Blog](https://svelte.dev/blog)
 - [Tutorial](https://svelte.dev/tutorial/basics)
 - [Examples](https://svelte.dev/examples#7guis-crud)
+- [Recipes](https://svelte-recipes.netlify.app/design-patterns/)
 - [REPL sandbox](https://svelte.dev/repl/hello-world?version=3.35.0)
 - [Material components](https://github.com/hperrin/svelte-material-ui)
 

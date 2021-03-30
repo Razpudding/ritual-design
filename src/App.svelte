@@ -18,7 +18,7 @@
 	import RemoveShape from './RemoveShape.svelte'
 	import {loadData, generateText} from './wordDataHandler.js'
 	
-	let savedData = []
+	let savedData = {}
 
 	for (let i = 0; i < 5; i ++){
 		$slots.push({ id: i+1, shape: null })
@@ -81,12 +81,28 @@
 	}
 
 	function saveElementData(){
-		console.log("Saving shape data", $shapes)
-		savedData = $shapes
+		//make a deep copy of each array. it contains objects so a shallow copy wont work
+		savedData.shapes = $shapes.map(s => ({...s}));
+		savedData.slots = $slots.map(s => ({...s}));
+		console.log("Saving element data", savedData)
 	}
 	function loadElementData(){
+		console.log("Loading element data")
+		//TODO: Find a better nullcheck here. This might cause issues if the array of slots is empty for instance
+		if (savedData.shapes && savedData.slots){
+			console.log(savedData.slots)
+			$shapes = savedData.shapes
+			$slots = savedData.slots
+		}
+		else {
+			console.log("No data saved yet")
+		}
+	}
+	function resetElementData(){
+		//TODO: This functionality is not needed but there is a need to reset the stage. It makes sense to put all the setup work in a separate functie, or module when the intro screen works.
+		console.log("Resetting element data")	
 		$shapes = []
-		$shapes = savedData
+		$slots = []
 	}
 
 	//Load the word data and set variables
@@ -147,6 +163,9 @@
 	<RemoveShape/>
 	<div id="addSlotBtn" class="button" on:click="{e => {$slots = $slots.concat({ id: maxSlotID +1, shape: null })}}">Add slot</div>
 	<div id="removeSlotBtn" class="button" on:click={removeSlot($slots.length-1)}>Remove slot</div>
+	<div id="saveData" class="buttonBottom" on:click={saveElementData}>Save data</div>
+	<div id="loadData" class="buttonBottom" on:click={loadElementData}>Load data</div>
+	<div id="resetData" class="buttonBottom" on:click={resetElementData}>Reset data</div>
 </section>
 
 <style>
@@ -198,6 +217,19 @@
     padding: 5px;
     text-align: center;
     position: absolute;
+  }
+  .buttonBottom {
+    width: 5em;
+    margin: auto;
+    color:#444;
+    border:1px solid #CCC;
+    cursor: pointer;
+    background:#DDD;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    vertical-align:middle;
+    padding: 5px;
+    text-align: center;
+    position: relative;
   }
 	#addSlotBtn {
   	bottom: 1em;
