@@ -2,25 +2,26 @@
 	/*
 	* TODO: 
 	*		Turn elements into components: random button
-	* 	Write a proper readme
 	*		Automatically resize all words (to same size) when word word is too long to fit
-	*		Circle in the middle should touch edges of cards (make bigger)
 	*		Implement material components to improve the styling
 	* 	Use modals for important action checks like saving or deleting design (https://github.com/flekschas/svelte-simple-modal)
-	* BUG:
+	* BUGS:
+	*		Styling: Circle needs a height setting to work prop. That means the containing div(slot container) needs 100% height but that causes the slot container to be higher than the page causing other issues.
 	*/
 	import { onMount } from 'svelte'
 	import { shapes } from './stores.js';
+	import { slots } from './stores.js'
 	import Shape from './Shape.svelte'
 	import Slot from './Slot.svelte'
 	import CenterSlot from './CenterSlot.svelte'
 	import Dropdown from './Dropdown.svelte'
 	import RemoveShape from './RemoveShape.svelte'
-	import {loadData, generateText} from './dataHandler.js'
+	import {loadData, generateText} from './wordDataHandler.js'
 	
-	let slots = []
+	let savedData = []
+
 	for (let i = 0; i < 5; i ++){
-		slots.push({ id: i+1, shape: null })
+		$slots.push({ id: i+1, shape: null })
 	}
 	let shapeColor = '#fddb5d'
 	$shapes.push({	type: 'rect', id: 0, slot: null, text:"", rotated:false, color:shapeColor })
@@ -31,7 +32,7 @@
 
 	//Create a new shape if the last shape is already placed in a slot
 	$: if($shapes.length == 0 || $shapes[$shapes.length -1].slot != null) { freshShape() }
-	$: maxSlotID = Math.max(...slots.map(s => s.id))
+	$: maxSlotID = Math.max(...$slots.map(s => s.id))
 	$: maxShapeID = Math.max(...$shapes.map(s => s.id))
 
 	//Create a fresh shape and add it to the shapes store
@@ -59,10 +60,10 @@
 	}
 	//Check if a slot can be removed, if not, call self with prev slot
 	function removeSlot(index){
-		if (slots.length > 1){
-			if (slots[index].shape === null){
-				slots.splice(index, 1)
-				slots = slots
+		if ($slots.length > 1){
+			if ($slots[index].shape === null){
+				$slots.splice(index, 1)
+				$slots = $slots
 			} else {
 				index > 0 ? removeSlot(--index) : console.log("no slots are empty")
 			}
@@ -78,6 +79,16 @@
 		sel.value = options[Math.floor(Math.random() * options.length)].value; 
 		sel.dispatchEvent(event)
 	}
+
+	function saveElementData(){
+		console.log("Saving shape data", $shapes)
+		savedData = $shapes
+	}
+	function loadElementData(){
+		$shapes = []
+		$shapes = savedData
+	}
+
 	//Load the word data and set variables
 	onMount(async () => {
 		const wordData = await loadData('assets/taxonomy_0.csv')
@@ -118,12 +129,11 @@
 
 <section class='content'>
 	<div class='slotsContainer'>
-		{#each slots as slot, i (slot.id)}
+		{#each $slots as slot, i (slot.id)}
 			<Slot
-				slotData={slot}
-				slots={slots}
+				slotId={slot.id}
 				filled={$shapes.find(s => s.slot == slot.id) !== undefined}
-				rotation={i*(360/slots.length)+'deg'}
+				rotation={i*(360/$slots.length)+'deg'}
 			>
 				{#if $shapes.find(s => s.slot == slot.id)}
 					<Shape 
@@ -134,9 +144,9 @@
 		{/each}
 		<CenterSlot/>
 	</div>
-	<RemoveShape slots={slots}/>
-	<div id="addSlotBtn" class="button" on:click="{e => {slots = slots.concat({ id: maxSlotID +1, shape: null })}}">Add slot</div>
-	<div id="removeSlotBtn" class="button" on:click={removeSlot(slots.length-1)}>Remove slot</div>
+	<RemoveShape/>
+	<div id="addSlotBtn" class="button" on:click="{e => {$slots = $slots.concat({ id: maxSlotID +1, shape: null })}}">Add slot</div>
+	<div id="removeSlotBtn" class="button" on:click={removeSlot($slots.length-1)}>Remove slot</div>
 </section>
 
 <style>

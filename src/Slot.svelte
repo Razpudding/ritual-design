@@ -1,9 +1,12 @@
 <script>
   import { shapes } from './stores.js'
-  export let slotData
-  export let slots
+  import { slots } from './stores.js'
+  export let slotId
   export let filled = false
   export let rotation = '20deg'
+
+  let slotData = $slots.find(s => s.id === slotId)
+  
   //On drop, find the id of the shape dropped and update that shape to reflect this slot
 	function handleDragDrop(e) {
     e.preventDefault()
@@ -13,15 +16,15 @@
           .getData("text")
       const myShape = $shapes.find(shape => shape.id == element_id)
       //If the shape was dropped from another slot, clear that slot
-      const duplicate = slots.find(s => s.shape == myShape.id)
+      const duplicate = $slots.find(s => s.shape == myShape.id)
       if (duplicate){
         duplicate.shape = null
       } 
       //Bind the slot to the shape and visa versa
       slotData.shape = myShape.id
       myShape.slot = slotData.id
-      //TODO: check if slots needs to be updated here?
-      // slots = slots
+
+      $slots = $slots
       $shapes = $shapes
       filled = true
       //TODO: check if return value is needed here
