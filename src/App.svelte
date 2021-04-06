@@ -17,7 +17,10 @@
 	import Dropdown from './Dropdown.svelte'
 	import RemoveShape from './RemoveShape.svelte'
 	import {loadData, generateText} from './wordDataHandler.js'
-	
+
+	import Content from './Content.svelte'
+	import Modal from 'svelte-simple-modal'
+
 	let savedData = {}
 
 	for (let i = 0; i < 5; i ++){
@@ -141,6 +144,9 @@
 	/>
   <input type="color" id="colorPicker" class='float-right w25' name="color picker" value="#fddb5d"
   	on:input={e => $shapes[$shapes.length-1].color = e.target.value}>
+	<Modal>
+		<Content />
+	</Modal>
 </section>
 
 <section class='content'>
