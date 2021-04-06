@@ -1,25 +1,31 @@
 <script>
 	/*
+	* ONGOING:
+	*		Started work on multiple saved design, next steps:
+	*			Test if save and load btn func can be integrated in the modal
+	*			Move save and load buttons to their own component and include them in the modal
+	*			Saving a design should prompt user for a title, saved designs will be listed by title
+	*			Three btns: new save, load saved design, save over current design?
+	*			savedDesigns should become an array of objects each with a title, shapes, and slot data
 	* TODO: 
 	*		Turn elements into components: random button
 	*		Automatically resize all words (to same size) when word word is too long to fit
 	*		Implement material components to improve the styling
-	* 	Use modals for important action checks like saving or deleting design (https://github.com/flekschas/svelte-simple-modal)
+	*		Move state like category, word, random option to store, then turn elements into components
 	* BUGS:
 	*		Styling: Circle needs a height setting to work prop. That means the containing div(slot container) needs 100% height but that causes the slot container to be higher than the page causing other issues.
 	*/
 	import { onMount } from 'svelte'
 	import { shapes } from './stores.js';
 	import { slots } from './stores.js'
+	import SavedDesignsOverview from './SavedDesignsOverview.svelte'
+	import Modal from 'svelte-simple-modal'
 	import Shape from './Shape.svelte'
 	import Slot from './Slot.svelte'
 	import CenterSlot from './CenterSlot.svelte'
 	import Dropdown from './Dropdown.svelte'
 	import RemoveShape from './RemoveShape.svelte'
 	import {loadData, generateText} from './wordDataHandler.js'
-
-	import Content from './Content.svelte'
-	import Modal from 'svelte-simple-modal'
 
 	let savedData = {}
 
@@ -145,7 +151,9 @@
   <input type="color" id="colorPicker" class='float-right w25' name="color picker" value="#fddb5d"
   	on:input={e => $shapes[$shapes.length-1].color = e.target.value}>
 	<Modal>
-		<Content />
+		<SavedDesignsOverview 
+			items={[{id:0, text:'first'},{id:1, text:'second'},{id:20, text:'last'}]}
+		/>
 	</Modal>
 </section>
 

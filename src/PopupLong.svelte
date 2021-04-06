@@ -1,24 +1,19 @@
 <script>
-  export let message;
+  export let message
+  export let items
 </script>
+
+<h1>🎉 {message} 🍾</h1>
+
+<ul>
+	{#each items as item (item.id)}
+	<li>{item.text}</li>
+	{/each}
+</ul>
 
 <style>
   h1 {
 		font-size: 2rem;
 		text-align: center;
 	}
-	
-  h2 {
-		font-size: 1.25rem;
-	}
 </style>
-
-<h1>🎉 {message} 🍾</h1>
-
-<ul>
-	<li>List</li>
-	<li>Of</li>
-	<li>Saved</li>
-	<li>Designs</li>
-	<li>Tron</li>
-</ul>

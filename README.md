@@ -20,6 +20,7 @@ A tool I'm building to help an artist design rituals
 - [REPL sandbox](https://svelte.dev/repl/hello-world?version=3.35.0)
 - [Material components 1](https://sveltematerialui.com/demo/drawer)
 - [Material components 2](https://docs.svelteit.dev/cards)
+- [Svelte-mongodb-express setup](https://www.youtube.com/watch?v=X6J41F2DadQ&ab_channel=EstebanCodes)
 
 ## Saving data
 
