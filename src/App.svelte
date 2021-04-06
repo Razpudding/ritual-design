@@ -82,17 +82,17 @@
 
 	function saveElementData(){
 		//make a deep copy of each array. it contains objects so a shallow copy wont work
-		savedData.shapes = $shapes.map(s => ({...s}));
-		savedData.slots = $slots.map(s => ({...s}));
+		savedData.shapes = $shapes.map(s => ({...s}))
+		savedData.slots = $slots.map(s => ({...s}))
 		console.log("Saving element data", savedData)
 	}
 	function loadElementData(){
 		console.log("Loading element data")
 		//TODO: Find a better nullcheck here. This might cause issues if the array of slots is empty for instance
 		if (savedData.shapes && savedData.slots){
-			console.log(savedData.slots)
-			$shapes = savedData.shapes
-			$slots = savedData.slots
+			console.log('slots', savedData.slots)
+			$shapes = savedData.shapes.map(s => ({...s}))
+			$slots = savedData.slots.map(s => ({...s}))
 		}
 		else {
 			console.log("No data saved yet")

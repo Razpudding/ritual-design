@@ -18,9 +18,27 @@ A tool I'm building to help an artist design rituals
 - [Examples](https://svelte.dev/examples#7guis-crud)
 - [Recipes](https://svelte-recipes.netlify.app/design-patterns/)
 - [REPL sandbox](https://svelte.dev/repl/hello-world?version=3.35.0)
-- [Material components](https://github.com/hperrin/svelte-material-ui)
+- [Material components 1](https://sveltematerialui.com/demo/drawer)
+- [Material components 2](https://docs.svelteit.dev/cards)
 
-## Data structure
+## Saving data
+
+### Functionality
+You can save the current state of the design you're working on. This means creating a copy of the slot and shape data.
+
+- Save button
+    + Dumps slot and shape data to local mem/db
+    + Checks if current save should be overwritten or new save created
+- Load button
+    + Allows user to select a previously saved design
+- Sidebar drawer with saved designs
+    + Vertical scroll through images of saved designs (just text at first)
+    + Clicking/mouseover on one shows a bigger image of the design
+    + Selecting one gives option to load (if current state is unsaved ask if it should be)
+    + Loading the design gets the data from mem/db and rerenders the content screen
+- Maybe save and load btn should be in the same sidebar?
+
+### Data Structure
 Some options for reflecting the data of designs
 *Flat*
 Every type of data entity gets its own collection. Lots of boilerplate but easily maintained and expanded. Would make queries light but also manifold.
