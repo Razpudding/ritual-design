@@ -6,7 +6,6 @@
 	*			Move save and load buttons to their own component and include them in the modal
 	*			Saving a design should prompt user for a title, saved designs will be listed by title
 	*			Three btns: new save, load saved design, save over current design?
-	*			savedDesigns should become an array of objects each with a title, shapes, and slot data
 	* TODO: 
 	*		Turn elements into components: random button
 	*		Automatically resize all words (to same size) when word word is too long to fit
@@ -27,7 +26,8 @@
 	import RemoveShape from './RemoveShape.svelte'
 	import {loadData, generateText} from './wordDataHandler.js'
 
-	let savedData = {}
+	let savedData = [{id:0}]
+	let currentSave = 0
 
 	for (let i = 0; i < 5; i ++){
 		$slots.push({ id: i+1, shape: null })
@@ -90,21 +90,30 @@
 	}
 
 	function saveElementData(){
-		//make a deep copy of each array. it contains objects so a shallow copy wont work
-		savedData.shapes = $shapes.map(s => ({...s}))
-		savedData.slots = $slots.map(s => ({...s}))
-		console.log("Saving element data", savedData)
-	}
-	function loadElementData(){
-		console.log("Loading element data")
-		//TODO: Find a better nullcheck here. This might cause issues if the array of slots is empty for instance
-		if (savedData.shapes && savedData.slots){
-			console.log('slots', savedData.slots)
-			$shapes = savedData.shapes.map(s => ({...s}))
-			$slots = savedData.slots.map(s => ({...s}))
+		let save = savedData.find(save => save.id == currentSave)
+		if (save == undefined) { 
+			console.log("no save found for this id", currentSave)
 		}
 		else {
-			console.log("No data saved yet")
+			//make a deep copy of each array. it contains objects so a shallow copy wont work
+			save.shapes = $shapes.map(s => ({...s}))
+			save.slots = $slots.map(s => ({...s}))
+			console.log("Saving element data", savedData)
+		}
+	}
+	function loadElementData(){
+		let save = savedData.find(save => save.id == currentSave)
+		if (save == undefined) { 
+			console.log("no save found for this id", currentSave)
+		}
+		//TODO: Find a better nullcheck here. This might cause issues if the array of slots is empty for instance
+		if (save.shapes && save.slots){
+			console.log('slots', save.slots)
+			$shapes = save.shapes.map(s => ({...s}))
+			$slots = save.slots.map(s => ({...s}))
+		}
+		else {
+			console.log("Invalid save", save)
 		}
 	}
 	function resetElementData(){
