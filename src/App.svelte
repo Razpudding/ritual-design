@@ -8,6 +8,7 @@
 	*			Three btns: new save, load saved design, save over current design?
 	* TODO: 
 	*		Turn elements into components: random button
+	*		Change to Sass so components can be styled and classes reused properly
 	*		Automatically resize all words (to same size) when word word is too long to fit
 	*		Implement material components to improve the styling
 	*		Move state like category, word, random option to store, then turn elements into components
@@ -16,8 +17,9 @@
 	*/
 	import { onMount } from 'svelte'
 	import { shapes, slots } from './stores.js';
-	import SavedDesignsOverview from './menu_components/SavedDesignsOverview.svelte'
+	import SavedDesignsOverview from './save_screen/SavedDesignsOverview.svelte'
 	import Modal from 'svelte-simple-modal'
+	import Button from './menu_components/Button.svelte'
 	import Shape from './shape_components/Shape.svelte'
 	import Slot from './shape_components/Slot.svelte'
 	import CenterSlot from './shape_components/CenterSlot.svelte'
@@ -184,11 +186,11 @@
 		<CenterSlot/>
 	</div>
 	<RemoveShape/>
-	<div id="addSlotBtn" class="button" on:click="{e => {$slots = $slots.concat({ id: maxSlotID +1, shape: null })}}">Add slot</div>
-	<div id="removeSlotBtn" class="button" on:click={removeSlot($slots.length-1)}>Remove slot</div>
-	<div id="saveData" class="buttonBottom" on:click={saveElementData}>Save data</div>
-	<div id="loadData" class="buttonBottom" on:click={loadElementData}>Load data</div>
-	<div id="resetData" class="buttonBottom" on:click={resetElementData}>Reset data</div>
+	<Button on:click="{() => $slots=$slots.concat({id:maxSlotID +1, shape:null})}" text="Add slot"/>
+	<Button on:click={removeSlot($slots.length-1)} text="Remove slot"/>
+	<Button on:click={saveElementData} text="Save data"/>
+	<Button on:click={loadElementData} text="Load data"/>
+	<Button on:click={resetElementData} text="Reset data"/>
 </section>
 
 <style>
@@ -227,40 +229,6 @@
   .w25 {
   	width: 25%;
   }
-
-  .button {
-    width: 5em;
-    margin: auto;
-    color:#444;
-    border:1px solid #CCC;
-    cursor: pointer;
-    background:#DDD;
-    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
-    vertical-align:middle;
-    padding: 5px;
-    text-align: center;
-    position: absolute;
-  }
-  .buttonBottom {
-    width: 5em;
-    margin: auto;
-    color:#444;
-    border:1px solid #CCC;
-    cursor: pointer;
-    background:#DDD;
-    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
-    vertical-align:middle;
-    padding: 5px;
-    text-align: center;
-    position: relative;
-  }
-	#addSlotBtn {
-  	bottom: 1em;
-	}
-	#removeSlotBtn {
-  	bottom: 1em;
-  	right: 1em;
-	}
 	#colorPicker {
 		padding: 0;
 		margin: 0;

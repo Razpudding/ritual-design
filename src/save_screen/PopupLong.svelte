@@ -1,5 +1,6 @@
 <script>
 	import DesignCard from './DesignCard.svelte'
+  import Button from '../menu_components/Button.svelte'
   export let message
   export let items
 
@@ -21,11 +22,11 @@
 	{/each}
 </ul>
 
-<!-- <NewDesignBtn/> -->
+<Button on:click text='New Design'/>
 
 {#if selectedItem !== undefined}
-	<LoadDesignBtn/>
-	<OverwriteDesignBtn/>
+	<Button on:click text='Load Design'/>
+  <Button on:click text='Overwrite Design'/>
 {/if}
 
 <style>
