@@ -1,6 +1,5 @@
 <script>
-  import { shapes } from './stores.js'
-  import { slots } from './stores.js'
+  import { shapes, slots } from '../stores.js'
   export let slotId
   export let filled = false
   export let rotation = '20deg'

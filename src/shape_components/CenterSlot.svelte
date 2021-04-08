@@ -1,5 +1,5 @@
 <script>
-  import { shapes } from './stores.js'
+  import { shapes } from '../stores.js'
   let centerText = ''
 
   function handleDragDrop(e) {

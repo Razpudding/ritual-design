@@ -1,6 +1,5 @@
 <script>
-  import { shapes } from './stores.js'
-  import { slots } from './stores.js'
+  import { shapes, slots } from '../stores.js'
   
   function handleDragDrop(e) {
     console.log("deleting shape")
@@ -14,7 +13,6 @@
     if (duplicate){
       duplicate.shape = null
     }
-    // slots = slots
     //Delete the dropped shape from the shapedata
     $shapes = $shapes.filter(s => s.id != element_id)
   }

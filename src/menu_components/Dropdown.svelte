@@ -8,7 +8,6 @@
   const dispatch = createEventDispatcher()
 
   function makeSelection(){
-    console.log("makeSelection")
     dispatch('selection', {
       text: selected
     })

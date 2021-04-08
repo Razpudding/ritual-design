@@ -15,16 +15,15 @@
 	*		Styling: Circle needs a height setting to work prop. That means the containing div(slot container) needs 100% height but that causes the slot container to be higher than the page causing other issues.
 	*/
 	import { onMount } from 'svelte'
-	import { shapes } from './stores.js';
-	import { slots } from './stores.js'
-	import SavedDesignsOverview from './SavedDesignsOverview.svelte'
+	import { shapes, slots } from './stores.js';
+	import SavedDesignsOverview from './menu_components/SavedDesignsOverview.svelte'
 	import Modal from 'svelte-simple-modal'
-	import Shape from './Shape.svelte'
-	import Slot from './Slot.svelte'
-	import CenterSlot from './CenterSlot.svelte'
-	import Dropdown from './Dropdown.svelte'
-	import RemoveShape from './RemoveShape.svelte'
-	import {loadData, generateText} from './wordDataHandler.js'
+	import Shape from './shape_components/Shape.svelte'
+	import Slot from './shape_components/Slot.svelte'
+	import CenterSlot from './shape_components/CenterSlot.svelte'
+	import Dropdown from './menu_components/Dropdown.svelte'
+	import RemoveShape from './shape_components/RemoveShape.svelte'
+	import {loadData, generateText} from './helpers/wordDataHandler.js'
 
 	let savedData = [{id:0}]
 	let currentSave = 0
@@ -105,6 +104,7 @@
 		let save = savedData.find(save => save.id == currentSave)
 		if (save == undefined) { 
 			console.log("no save found for this id", currentSave)
+			return
 		}
 		//TODO: Find a better nullcheck here. This might cause issues if the array of slots is empty for instance
 		if (save.shapes && save.slots){
