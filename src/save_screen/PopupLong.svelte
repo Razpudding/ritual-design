@@ -1,18 +1,14 @@
 <script>
 	import DesignCard from './DesignCard.svelte'
   import Button from '../menu_components/Button.svelte'
-  import { shapes, slots, savedDesigns } from '../stores.js'
+  import { shapes, slots, savedDesigns, currentSave } from '../stores.js'
 
   export let message
 
   console.log('popup loaded with', $savedDesigns)
   let selectedId
 
-  function selectDesign(id){
-  	selectedId = id
-  	console.log("selected design", selectedId)
-  }
-
+  //TODO: Maybe move this to a helper js module so loading can be done from other places as well.
   function loadDesign(){
     let save = $savedDesigns.find(i => i.id == selectedId)
     if (save == undefined) { 
@@ -24,6 +20,7 @@
       console.log("Loading data for design", save)
       $shapes = save.shapes.map(s => ({...s}))
       $slots = save.slots.map(s => ({...s}))
+      $currentSave = save.id
     }
     else {
       console.log("Invalid save", save)
@@ -35,7 +32,7 @@
 
 <ul>
 	{#each $savedDesigns as item (item.id)}
-		<DesignCard {item} on:click={selectDesign(item.id)}/>
+		<DesignCard {item} on:click={()=>{selectedId = item.id}}/>
 	{/each}
 </ul>
 

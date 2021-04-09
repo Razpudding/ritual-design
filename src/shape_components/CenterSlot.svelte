@@ -3,15 +3,12 @@
   let centerText = ''
 
   function handleDragDrop(e) {
-    console.log("Setting middle text")
-    
+    console.log(e)
     e.preventDefault()
     const element_id = e
       .dataTransfer
       .getData("text")
     centerText = $shapes.find(s => s.id == element_id).text
-    console.log(centerText)
-    
   }
 
   function handleDragOver(e) {

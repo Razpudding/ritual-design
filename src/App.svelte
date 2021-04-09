@@ -7,7 +7,7 @@
 	*			Saving a design should prompt user for a title, saved designs will be listed by title
 	*			Three btns: new save, load saved design, save over current design?
 	* TODO: 
-	*		Move saveData to store
+	*		When data is loaded, the centertext should be overwritten by the title once. Prob by saving the title as a seprate store field?
 	*		Turn elements into components: random button
 	*		Change to Sass so components can be styled and classes reused properly
 	*		Automatically resize all words (to same size) when word word is too long to fit
@@ -17,7 +17,7 @@
 	*		Styling: Circle needs a height setting to work prop. That means the containing div(slot container) needs 100% height but that causes the slot container to be higher than the page causing other issues.
 	*/
 	import { onMount } from 'svelte'
-	import { shapes, slots, savedDesigns } from './stores.js'
+	import { shapes, slots, savedDesigns, currentSave } from './stores.js'
 	import SavedDesignsOverview from './save_screen/SavedDesignsOverview.svelte'
 	import Modal from 'svelte-simple-modal'
 	import Button from './menu_components/Button.svelte'
@@ -28,8 +28,10 @@
 	import RemoveShape from './shape_components/RemoveShape.svelte'
 	import {loadData, generateText} from './helpers/wordDataHandler.js'
 
-	$savedDesigns = [{id:0, title:'first'},{id:1, title:'second'},{id:20, title:'last'}]
-	let currentSave = 0
+	$savedDesigns = [{id:0, title:'first', shapes:[], slots:[]},{id:1, title:'second', shapes:[], slots:[] },{id:20, title:'last', shapes:[], slots:[]}]
+	
+	//TODO: Determine what 0 state should be. Opening the app should start a new save?
+	$currentSave = 0
 
 	for (let i = 0; i < 5; i ++){
 		$slots.push({ id: i+1, shape: null })
@@ -40,6 +42,7 @@
 	let words = [[]]
 	let currentCategory = 0
 	let currentWord = ''
+	let centerSlot
 
 	//Create a new shape if the last shape is already placed in a slot
 	$: if($shapes.length == 0 || $shapes[$shapes.length -1].slot != null) { freshShape() }
@@ -63,6 +66,7 @@
 		currentWord = words[currentCategory][0]
 		$shapes[$shapes.length-1].text = currentWord
 		//Overwrite the selected value of the word selector
+		//TODO: use bind:this to more easily fetch this element
 		document.getElementById('dropdownWord').options[0].selected = true
 	}
 	function changeWord(e){
@@ -92,14 +96,15 @@
 	}
 
 	function saveElementData(){
-		let save = $savedDesigns.find(save => save.id == currentSave)
+		let save = $savedDesigns.find(save => save.id == $currentSave)
 		if (save == undefined) { 
-			console.log("no save found for this id", currentSave)
+			console.log("no save found for this id", $currentSave)
 		}
 		else {
 			//make a deep copy of each array. it contains objects so a shallow copy wont work
 			save.shapes = $shapes.map(s => ({...s}))
 			save.slots = $slots.map(s => ({...s}))
+			save.title = centerSlot.document.querySelector('> input').value
 			console.log("Saving element data", save)
 		}
 	}
@@ -146,6 +151,7 @@
 	/>
   <input type="color" id="colorPicker" class='float-right w25' name="color picker" value="#fddb5d"
   	on:input={e => $shapes[$shapes.length-1].color = e.target.value}>
+	<Button on:click={saveElementData} text="Save design #{$currentSave}"/>
 	<Modal>
 		<SavedDesignsOverview/>
 	</Modal>
@@ -166,13 +172,12 @@
 				{/if}
 			</Slot>
 		{/each}
-		<CenterSlot/>
+		<CenterSlot bind:this="{centerSlot}"/>
 	</div>
 	<div class='UIComponents'>
 		<RemoveShape/>
 		<Button on:click="{() => $slots=$slots.concat({id:maxSlotID +1, shape:null})}" text="Add slot"/>
 		<Button on:click={removeSlot($slots.length-1)} text="Remove slot"/>
-		<Button on:click={saveElementData} text="Save data"/>
 		<Button on:click={resetElementData} text="Reset data"/>
 	</div>
 </section>

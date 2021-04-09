@@ -2,6 +2,7 @@
 
   import { getContext } from 'svelte'
 	import { fly } from 'svelte/transition'
+	import Button from '../menu_components/Button.svelte'
 	
   import PopupLong from './PopupLong.svelte'
 
@@ -11,7 +12,7 @@
 	}
 </script>
 
-<button on:click={showPopupLong}>See saved designs</button>
+<Button on:click={showPopupLong} text="See saved designs"></Button>
 
 <style>
 </style>
