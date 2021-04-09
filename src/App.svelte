@@ -7,6 +7,7 @@
 	*			Saving a design should prompt user for a title, saved designs will be listed by title
 	*			Three btns: new save, load saved design, save over current design?
 	* TODO: 
+	*		Move saveData to store
 	*		Turn elements into components: random button
 	*		Change to Sass so components can be styled and classes reused properly
 	*		Automatically resize all words (to same size) when word word is too long to fit
@@ -16,7 +17,7 @@
 	*		Styling: Circle needs a height setting to work prop. That means the containing div(slot container) needs 100% height but that causes the slot container to be higher than the page causing other issues.
 	*/
 	import { onMount } from 'svelte'
-	import { shapes, slots } from './stores.js';
+	import { shapes, slots, savedDesigns } from './stores.js'
 	import SavedDesignsOverview from './save_screen/SavedDesignsOverview.svelte'
 	import Modal from 'svelte-simple-modal'
 	import Button from './menu_components/Button.svelte'
@@ -27,7 +28,7 @@
 	import RemoveShape from './shape_components/RemoveShape.svelte'
 	import {loadData, generateText} from './helpers/wordDataHandler.js'
 
-	let savedData = [{id:0}]
+	$savedDesigns = [{id:0, title:'first'},{id:1, title:'second'},{id:20, title:'last'}]
 	let currentSave = 0
 
 	for (let i = 0; i < 5; i ++){
@@ -91,7 +92,7 @@
 	}
 
 	function saveElementData(){
-		let save = savedData.find(save => save.id == currentSave)
+		let save = $savedDesigns.find(save => save.id == currentSave)
 		if (save == undefined) { 
 			console.log("no save found for this id", currentSave)
 		}
@@ -99,23 +100,7 @@
 			//make a deep copy of each array. it contains objects so a shallow copy wont work
 			save.shapes = $shapes.map(s => ({...s}))
 			save.slots = $slots.map(s => ({...s}))
-			console.log("Saving element data", savedData)
-		}
-	}
-	function loadElementData(){
-		let save = savedData.find(save => save.id == currentSave)
-		if (save == undefined) { 
-			console.log("no save found for this id", currentSave)
-			return
-		}
-		//TODO: Find a better nullcheck here. This might cause issues if the array of slots is empty for instance
-		if (save.shapes && save.slots){
-			console.log('slots', save.slots)
-			$shapes = save.shapes.map(s => ({...s}))
-			$slots = save.slots.map(s => ({...s}))
-		}
-		else {
-			console.log("Invalid save", save)
+			console.log("Saving element data", save)
 		}
 	}
 	function resetElementData(){
@@ -162,9 +147,7 @@
   <input type="color" id="colorPicker" class='float-right w25' name="color picker" value="#fddb5d"
   	on:input={e => $shapes[$shapes.length-1].color = e.target.value}>
 	<Modal>
-		<SavedDesignsOverview 
-			items={[{id:0, text:'first'},{id:1, text:'second'},{id:20, text:'last'}]}
-		/>
+		<SavedDesignsOverview/>
 	</Modal>
 </section>
 
@@ -185,12 +168,13 @@
 		{/each}
 		<CenterSlot/>
 	</div>
-	<RemoveShape/>
-	<Button on:click="{() => $slots=$slots.concat({id:maxSlotID +1, shape:null})}" text="Add slot"/>
-	<Button on:click={removeSlot($slots.length-1)} text="Remove slot"/>
-	<Button on:click={saveElementData} text="Save data"/>
-	<Button on:click={loadElementData} text="Load data"/>
-	<Button on:click={resetElementData} text="Reset data"/>
+	<div class='UIComponents'>
+		<RemoveShape/>
+		<Button on:click="{() => $slots=$slots.concat({id:maxSlotID +1, shape:null})}" text="Add slot"/>
+		<Button on:click={removeSlot($slots.length-1)} text="Remove slot"/>
+		<Button on:click={saveElementData} text="Save data"/>
+		<Button on:click={resetElementData} text="Reset data"/>
+	</div>
 </section>
 
 <style>

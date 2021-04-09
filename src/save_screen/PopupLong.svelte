@@ -1,31 +1,48 @@
 <script>
 	import DesignCard from './DesignCard.svelte'
   import Button from '../menu_components/Button.svelte'
-  export let message
-  export let items
+  import { shapes, slots, savedDesigns } from '../stores.js'
 
-  console.log(items)
-  let selectedItem
+  export let message
+
+  console.log('popup loaded with', $savedDesigns)
+  let selectedId
 
   function selectDesign(id){
-  	selectedItem = id
-  	console.log("selected design", selectedItem)
+  	selectedId = id
+  	console.log("selected design", selectedId)
   }
-  //Each designcard can be selected. When one is selected the selecteditem reflects this
+
+  function loadDesign(){
+    let save = $savedDesigns.find(i => i.id == selectedId)
+    if (save == undefined) { 
+      console.log("no save found for this id", selectedId)
+      return
+    }
+    //TODO: Find a better nullcheck here. This might cause issues if the array of slots is empty for instance
+    if (save.shapes && save.slots){
+      console.log("Loading data for design", save)
+      $shapes = save.shapes.map(s => ({...s}))
+      $slots = save.slots.map(s => ({...s}))
+    }
+    else {
+      console.log("Invalid save", save)
+    }
+  }
 </script>
 
-<h1>🎉 {message} 🍾</h1>
+<h1>{message}</h1>
 
 <ul>
-	{#each items as item (item.id)}
+	{#each $savedDesigns as item (item.id)}
 		<DesignCard {item} on:click={selectDesign(item.id)}/>
 	{/each}
 </ul>
 
-<Button on:click text='New Design'/>
-
-{#if selectedItem !== undefined}
-	<Button on:click text='Load Design'/>
+{#if selectedId == undefined}
+  <Button on:click text='New Design'/>
+{:else}
+	<Button on:click={loadDesign} text='Load Design'/>
   <Button on:click text='Overwrite Design'/>
 {/if}
 
