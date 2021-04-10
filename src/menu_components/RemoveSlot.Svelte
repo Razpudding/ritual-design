@@ -1,6 +1,6 @@
 <script>
 	import { slots } from '../stores.js'
-	import Button from './Button.svelte'
+	// import Button from './Button.svelte'
 
 	//Check if a slot can be removed, if not, call self with prev slot
 	function removeSlot(index){
