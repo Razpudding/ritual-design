@@ -2,10 +2,7 @@
 	/*
 	* ONGOING:
 	*		Started work on multiple saved design, next steps:
-	*			Test if save and load btn func can be integrated in the modal
-	*			Move save and load buttons to their own component and include them in the modal
 	*			Saving a design should prompt user for a title, saved designs will be listed by title
-	*			Three btns: new save, load saved design, save over current design?
 	* TODO: 
 	*		When data is loaded, the centertext should be overwritten by the title once. Prob by saving the title as a seprate store field?
 	*		Turn elements into components: random button
@@ -25,7 +22,8 @@
 	import Slot from './shape_components/Slot.svelte'
 	import CenterSlot from './shape_components/CenterSlot.svelte'
 	import Dropdown from './menu_components/Dropdown.svelte'
-	import RemoveShape from './shape_components/RemoveShape.svelte'
+	import RemoveShape from './menu_components/RemoveShape.svelte'
+	import RemoveSlotBtn from './menu_components/RemoveSlotBtn.svelte'
 	import {loadData, generateText} from './helpers/wordDataHandler.js'
 
 	$savedDesigns = [{id:0, title:'first', shapes:[], slots:[]},{id:1, title:'second', shapes:[], slots:[] },{id:20, title:'last', shapes:[], slots:[]}]
@@ -73,19 +71,7 @@
 		currentWord = e.detail.text
 		$shapes[$shapes.length-1].text = currentWord
 	}
-	//Check if a slot can be removed, if not, call self with prev slot
-	function removeSlot(index){
-		if ($slots.length > 1){
-			if ($slots[index].shape === null){
-				$slots.splice(index, 1)
-				$slots = $slots
-			} else {
-				index > 0 ? removeSlot(--index) : console.log("no slots are empty")
-			}
-		} else {
-			console.log("can't remove last slot")
-		}
-	}
+
 	//Select a random category and dispatch a change event on the select
 	function randomOption(target){
 		const event = new Event("change")
@@ -177,7 +163,7 @@
 	<div class='UIComponents'>
 		<RemoveShape/>
 		<Button on:click="{() => $slots=$slots.concat({id:maxSlotID +1, shape:null})}" text="Add slot"/>
-		<Button on:click={removeSlot($slots.length-1)} text="Remove slot"/>
+		<RemoveSlotBtn/>
 		<Button on:click={resetElementData} text="Reset data"/>
 	</div>
 </section>
