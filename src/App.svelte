@@ -22,7 +22,7 @@
 	import CenterSlot from './shape_components/CenterSlot.svelte'
 	import Dropdown from './menu_components/Dropdown.svelte'
 	import RemoveShape from './menu_components/RemoveShape.svelte'
-	import RemoveSlot from './menu_components/RemoveSlot.svelte'
+	import DeleteSlot from './menu_components/DeleteSlot.svelte'
 	import {loadData, generateText} from './helpers/wordDataHandler.js'
 
 	$savedDesigns = [{id:0, title:'New Design', shapes:[], slots:[]}]
@@ -165,7 +165,7 @@
 	<div class='UIComponents'>
 		<RemoveShape/>
 		<Button on:click="{() => $slots=$slots.concat({id:maxSlotID +1, shape:null})}" text="Add slot"/>
-		<RemoveSlot/>
+		<DeleteSlot/>
 		<Button on:click={resetElementData} text="Start from scratch"/>
 	</div>
 </section>

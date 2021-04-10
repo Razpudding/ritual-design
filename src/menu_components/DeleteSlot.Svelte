@@ -1,6 +1,6 @@
 <script>
 	import { slots } from '../stores.js'
-	// import Button from './Button.svelte'
+	import Button from './Button.svelte'
 
 	//Check if a slot can be removed, if not, call self with prev slot
 	function removeSlot(index){
@@ -17,7 +17,7 @@
 	}
 </script>
 
-<!-- <Button on:click={removeSlot($slots.length-1)} text="Remove slot"/> -->
+<Button on:click={removeSlot($slots.length-1)} text="Remove slot"/>
 
 <style>
 </style>
