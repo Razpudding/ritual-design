@@ -1,12 +1,18 @@
 <script>
 	import DesignCard from './DesignCard.svelte'
   import Button from '../menu_components/Button.svelte'
-  import { shapes, slots, savedDesigns, currentSave } from '../stores.js'
+  import { shapes, slots, savedDesigns, currentSave, centerText } from '../stores.js'
 
   export let message
 
   console.log('popup loaded with', $savedDesigns)
   let selectedId
+
+
+  function createNewDesign(){
+    const maxID = Math.max(...$savedDesigns.map(s => s.id))
+    $savedDesigns = $savedDesigns.concat({id:maxID + 1, title:'New Design', shapes:[], slots:[]})
+  }
 
   //TODO: Maybe move this to a helper js module so loading can be done from other places as well.
   function loadDesign(){
@@ -21,6 +27,7 @@
       $shapes = save.shapes.map(s => ({...s}))
       $slots = save.slots.map(s => ({...s}))
       $currentSave = save.id
+      $centerText = save.title
     }
     else {
       console.log("Invalid save", save)
@@ -37,7 +44,7 @@
 </ul>
 
 {#if selectedId == undefined}
-  <Button on:click text='New Design'/>
+  <Button on:click={createNewDesign} text='New Design'/>
 {:else}
 	<Button on:click={loadDesign} text='Load Design'/>
   <Button on:click text='Overwrite Design'/>

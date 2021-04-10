@@ -1,6 +1,5 @@
 <script>
-  import { shapes } from '../stores.js'
-  let centerText = ''
+  import { shapes, centerText } from '../stores.js'
 
   function handleDragDrop(e) {
     console.log(e)
@@ -8,7 +7,7 @@
     const element_id = e
       .dataTransfer
       .getData("text")
-    centerText = $shapes.find(s => s.id == element_id).text
+    $centerText = $shapes.find(s => s.id == element_id).text
   }
 
   function handleDragOver(e) {
@@ -23,7 +22,7 @@
   >
   <input
     type=text
-    bind:value={centerText}
+    bind:value={$centerText}
   >
 </div>
 

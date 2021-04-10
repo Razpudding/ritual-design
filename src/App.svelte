@@ -4,17 +4,16 @@
 	*		Started work on multiple saved design, next steps:
 	*			Saving a design should prompt user for a title, saved designs will be listed by title
 	* TODO: 
-	*		When data is loaded, the centertext should be overwritten by the title once. Prob by saving the title as a seprate store field?
 	*		Turn elements into components: random button
 	*		Change to Sass so components can be styled and classes reused properly
 	*		Automatically resize all words (to same size) when word word is too long to fit
 	*		Implement material components to improve the styling
-	*		Move state like category, word, random option to store, then turn elements into components
+	*		Move all menu items to parent component. Move state like category, word, random option to store, then turn elements into components
 	* BUGS:
 	*		Styling: Circle needs a height setting to work prop. That means the containing div(slot container) needs 100% height but that causes the slot container to be higher than the page causing other issues.
 	*/
 	import { onMount } from 'svelte'
-	import { shapes, slots, savedDesigns, currentSave } from './stores.js'
+	import { shapes, slots, savedDesigns, currentSave, centerText } from './stores.js'
 	import SavedDesignsOverview from './save_screen/SavedDesignsOverview.svelte'
 	import Modal from 'svelte-simple-modal'
 	import Button from './menu_components/Button.svelte'
@@ -40,11 +39,12 @@
 	let words = [[]]
 	let currentCategory = 0
 	let currentWord = ''
+
 	let centerSlot
 
 	//Create a new shape if the last shape is already placed in a slot
 	$: if($shapes.length == 0 || $shapes[$shapes.length -1].slot != null) { freshShape() }
-	$: maxSlotID = Math.max(...$slots.map(s => s.id))
+	$: maxSlotID = $slots.length > 0 ? Math.max(...$slots.map(s => s.id)) : 0
 	$: maxShapeID = Math.max(...$shapes.map(s => s.id))
 
 	//Create a fresh shape and add it to the shapes store
@@ -87,10 +87,12 @@
 			console.log("no save found for this id", $currentSave)
 		}
 		else {
+			console.log(centerSlot)
 			//make a deep copy of each array. it contains objects so a shallow copy wont work
 			save.shapes = $shapes.map(s => ({...s}))
 			save.slots = $slots.map(s => ({...s}))
-			save.title = centerSlot.document.querySelector('> input').value
+			//This feels very hacky but bind:this seems to return a wrapper element instead of the html element for some reason
+			save.title = centerSlot.$$.ctx[0]	//querySelector('> input').value
 			console.log("Saving element data", save)
 		}
 	}
@@ -158,7 +160,7 @@
 				{/if}
 			</Slot>
 		{/each}
-		<CenterSlot bind:this="{centerSlot}"/>
+		<CenterSlot bind:this={centerSlot}/>
 	</div>
 	<div class='UIComponents'>
 		<RemoveShape/>
