@@ -8,7 +8,6 @@
   console.log('popup loaded with', $savedDesigns)
   let selectedId
 
-
   function createNewDesign(){
     const maxID = Math.max(...$savedDesigns.map(s => s.id))
     $savedDesigns = $savedDesigns.concat({id:maxID + 1, title:'New Design', shapes:[], slots:[]})
@@ -47,7 +46,6 @@
   <Button on:click={createNewDesign} text='New Design'/>
 {:else}
 	<Button on:click={loadDesign} text='Load Design'/>
-  <Button on:click text='Overwrite Design'/>
 {/if}
 
 <style>

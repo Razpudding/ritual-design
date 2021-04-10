@@ -25,7 +25,7 @@
 	import RemoveSlotBtn from './menu_components/RemoveSlotBtn.svelte'
 	import {loadData, generateText} from './helpers/wordDataHandler.js'
 
-	$savedDesigns = [{id:0, title:'first', shapes:[], slots:[]},{id:1, title:'second', shapes:[], slots:[] },{id:20, title:'last', shapes:[], slots:[]}]
+	$savedDesigns = [{id:0, title:'New Design', shapes:[], slots:[]}]
 	
 	//TODO: Determine what 0 state should be. Opening the app should start a new save?
 	$currentSave = 0
@@ -91,8 +91,7 @@
 			//make a deep copy of each array. it contains objects so a shallow copy wont work
 			save.shapes = $shapes.map(s => ({...s}))
 			save.slots = $slots.map(s => ({...s}))
-			//This feels very hacky but bind:this seems to return a wrapper element instead of the html element for some reason
-			save.title = centerSlot.$$.ctx[0]	//querySelector('> input').value
+			save.title = $centerText
 			console.log("Saving element data", save)
 		}
 	}
@@ -101,6 +100,7 @@
 		console.log("Resetting element data")	
 		$shapes = []
 		$slots = []
+		$centerText = 'New Design'
 	}
 
 	//Load the word data and set variables
@@ -166,7 +166,7 @@
 		<RemoveShape/>
 		<Button on:click="{() => $slots=$slots.concat({id:maxSlotID +1, shape:null})}" text="Add slot"/>
 		<RemoveSlotBtn/>
-		<Button on:click={resetElementData} text="Reset data"/>
+		<Button on:click={resetElementData} text="Start from scratch"/>
 	</div>
 </section>
 
