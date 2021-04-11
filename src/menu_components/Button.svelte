@@ -1,9 +1,11 @@
 <script>
   export let text
+  export let optionalClass = ''
 </script>
 
 <div
   on:click
+  class={optionalClass}
   >{text}
 </div>
 
@@ -21,5 +23,9 @@
     text-align: center;
     position: relative;
     display:inline-block;
+  }
+
+  .float-right {
+    float: right;
   }
 </style>

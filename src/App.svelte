@@ -10,7 +10,6 @@
 	*		Implement material components to improve the styling
 	*		Move all menu items to parent component. Move state like category, word, random option to store, then turn elements into components
 	* BUGS:
-	*		Strange vercel issue that I can't reproduce locally. Seems to be case-sensitivity related, possible solution here: https://github.com/vercel/next.js/discussions/18176
 	*		Styling: Circle needs a height setting to work prop. That means the containing div(slot container) needs 100% height but that causes the slot container to be higher than the page causing other issues.
 	*/
 	import { onMount } from 'svelte'
@@ -26,7 +25,9 @@
 	import DeleteSlot from './menu_components/RemoveSlot.svelte'
 	import {loadData, generateText} from './helpers/wordDataHandler.js'
 
-	$savedDesigns = [{id:0, title:'New Design', shapes:[], slots:[]}]
+	if ($savedDesigns.length == 0){
+		$savedDesigns = [{id:0, title:'New Design', shapes:[], slots:[]}]
+	}
 	
 	//TODO: Determine what 0 state should be. Opening the app should start a new save?
 	$currentSave = 0
@@ -97,7 +98,6 @@
 		}
 	}
 	function resetElementData(){
-		//TODO: This functionality is not needed but there is a need to reset the stage. It makes sense to put all the setup work in a separate functie, or module when the intro screen works.
 		console.log("Resetting element data")	
 		$shapes = []
 		$slots = []
@@ -126,14 +126,14 @@
 		on:selection={changeCategory}
 		id='dropdownCat'
 	/>
-	<button class='float-right w25' on:click={() => randomOption("dropdownCat")}>🔀</button>
+	<Button on:click={() => randomOption("dropdownCat")} text="🔀" optionalClass="float-right"/>
 	<Dropdown
 		title='Word'
 		options={words[currentCategory]}
 		on:selection={changeWord}
 		id='dropdownWord'
 	/>
-	<button class='float-right w25' on:click={() => randomOption("dropdownWord")}>🔀</button>
+	<Button on:click={() => randomOption("dropdownWord")} text="🔀" optionalClass="float-right"/>
 	<h1 class='clearBoth'>Shape</h1>
 	<Shape
 		shapeData={$shapes.filter(s => s.slot === null)[0]}
