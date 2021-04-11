@@ -1,8 +1,5 @@
 <script>
 	/*
-	* ONGOING:
-	*		Started work on multiple saved design, next steps:
-	*			Saving a design should prompt user for a title, saved designs will be listed by title
 	* TODO: 
 	*		Turn elements into components: random button
 	*		Change to Sass so components can be styled and classes reused properly
