@@ -10,6 +10,7 @@
 	*		Implement material components to improve the styling
 	*		Move all menu items to parent component. Move state like category, word, random option to store, then turn elements into components
 	* BUGS:
+	*		Strange vercel issue that I can't reproduce locally. Seems to be case-sensitivity related, possible solution here: https://github.com/vercel/next.js/discussions/18176
 	*		Styling: Circle needs a height setting to work prop. That means the containing div(slot container) needs 100% height but that causes the slot container to be higher than the page causing other issues.
 	*/
 	import { onMount } from 'svelte'
@@ -22,7 +23,7 @@
 	import CenterSlot from './shape_components/CenterSlot.svelte'
 	import Dropdown from './menu_components/Dropdown.svelte'
 	import RemoveShape from './menu_components/RemoveShape.svelte'
-	import DeleteSlot from './menu_components/DeleteSlot.svelte'
+	import DeleteSlot from './menu_components/RemoveSlot.svelte'
 	import {loadData, generateText} from './helpers/wordDataHandler.js'
 
 	$savedDesigns = [{id:0, title:'New Design', shapes:[], slots:[]}]
