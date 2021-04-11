@@ -1,9 +1,5 @@
 <script>
-  import { onMount } from 'svelte'
   import { shapes, centerText } from '../stores.js'
-  let textAr = false
-  // let fontSize
-  let minSize = 0
 
   function handleDragDrop(e) {
     console.log(e)
@@ -17,26 +13,7 @@
   function handleDragOver(e) {
     e.preventDefault()
     e.dataTransfer.dropEffect = "move"
-  }
-
-  function isOverflown(element) {
-      if (textAr){
-        console.log("element.scrollHeight", element.scrollHeight)
-        return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
-      }
-      return false
-      
-  }
-
-  // onMount(() => {
-  //   fontSize = parseInt(textAr.style.fontSize)
-  //   console.log("center mounted", textAr,  textAr.style)
-  // })
-  
-  // $: if (fontSize && isOverflown(textAr)) { el.style.fontSize = (--fontSize + "px") }
-
-  $: fontSize = textAr && (textAr.scrollHeight > textAr.clientHeight || textAr.scrollWidth > textAr.clientWidth) ? minSize : 18  
-  
+  }  
 </script>
 
 <div
@@ -44,8 +21,6 @@
   on:dragover={handleDragOver}
   >
   <textarea 
-    style="font-size: {fontSize + 'px'}"
-    bind:this={textAr}
     rows='7'
     type=text
     bind:value={$centerText}
@@ -74,6 +49,5 @@
     resize: none;
     overflow: hidden;
     border: none;
-    font-size: 80px;
   }
 </style>
