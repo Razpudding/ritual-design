@@ -12,6 +12,7 @@
 	import { onMount } from 'svelte'
 	import { shapes, slots, savedDesigns, currentSave, centerText } from './stores.js'
 	import SavedDesignsOverview from './save_screen/SavedDesignsOverview.svelte'
+	import ExportImportView from './export_import_screen/ExportImportView.svelte'
 	import Modal from 'svelte-simple-modal'
 	import Button from './menu_components/Button.svelte'
 	import Shape from './shape_components/Shape.svelte'
@@ -94,6 +95,7 @@
 			console.log("Saving element data", save)
 		}
 	}
+	
 	function resetElementData(){
 		console.log("Resetting element data")	
 		$shapes = []
@@ -140,6 +142,9 @@
 	<Button on:click={saveElementData} text="Save design #{$currentSave}"/>
 	<Modal>
 		<SavedDesignsOverview/>
+	</Modal>
+	<Modal>
+		<ExportImportView/>
 	</Modal>
 </section>
 
