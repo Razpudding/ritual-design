@@ -6,7 +6,7 @@ A tool I'm building to help an artist design rituals
 - [CouchDB](https://docs.couchdb.org/en/stable/intro/index.html) as a lightweight db solution
 - [JSONbin.io](https://jsonbin.io/) as a lightweight db solution. [Update json through API](https://jsonbin.io/api-reference/v3/bins/update).
 - Proper backend:
-    + Start with json objects in server memory
+    + Start with json objects in server memory (let's skip this and go straight to mongo)
     + Set up MongoDB as a database
     + Transform data mutation logic to MongoDB
 

@@ -1,7 +1,10 @@
 <script>
+  import { getContext } from 'svelte';
 	import DesignCard from './DesignCard.svelte'
   import Button from '../menu_components/Button.svelte'
   import { shapes, slots, savedDesigns, currentSave, centerText } from '../stores.js'
+
+  const { close } = getContext('simple-modal')
 
   export let message
 
@@ -27,6 +30,7 @@
       $slots = save.slots.map(s => ({...s}))
       $currentSave = save.id
       $centerText = save.title
+      close()
     }
     else {
       console.log("Invalid save", save)
