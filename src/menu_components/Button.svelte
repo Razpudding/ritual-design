@@ -11,7 +11,8 @@
 
 <style>
   div {
-    width: 5em;
+    min-width: 3em;
+    width: min-content;
     margin: auto;
     color:#444;
     border:1px solid #CCC;

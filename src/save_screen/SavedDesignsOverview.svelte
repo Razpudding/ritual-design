@@ -13,6 +13,3 @@
 </script>
 
 <Button on:click={showPopupLong} text="Manage Saves"></Button>
-
-<style>
-</style>

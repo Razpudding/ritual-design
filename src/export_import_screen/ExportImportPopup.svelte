@@ -1,17 +1,20 @@
 <script>
 	//TODO: On closing the popup, all state vars should be reset to false
+	import { getContext } from 'svelte'
 	import { shapes, slots, savedDesigns, currentSave, centerText } from '../stores.js'
 	import Button from '../menu_components/Button.svelte'
 	
-	let exportString
-	let inputtingData
-	let inputString
-	let loadedData
+  const { close } = getContext('simple-modal')
 
+  let currentFunction = "initial"
+	let exportString
+	let inputString
 	let newSaveID
+	let loadedData
 
 	function exportCurrentSave(){
 		exportString = JSON.stringify($savedDesigns.find(save => save.id == $currentSave))
+		currentFunction = "export"
 		console.log(exportString)
 	}
 
@@ -29,19 +32,16 @@
 				title: inputData.title
 			})
 			console.log($savedDesigns)
-			//Render the app to match the newly loaded data
 			loadedData = true
 		}
 		else { console.log("invalid save data", inputData)}
 	}
-
-	function showSaveInput(){
-		inputtingData = true
-	}
 </script>
 
-<Button on:click={showSaveInput} text="Import save"/>
-{#if inputtingData}
+<Button on:click={() => currentFunction = "import"} text="Import save"/>
+<Button on:click={exportCurrentSave} text="Export save #{$currentSave}"/>
+
+{#if currentFunction == "import"}
 	<h1>Paste data previously copied from this app here</h1>
 	<input type="text" bind:value={inputString}>
 	<Button on:click={loadSaveData} text="Load data"/>
@@ -49,10 +49,7 @@
 		<h1>Data has been saved as design {newSaveID}</h1>
 		<span>You can load this design in the 'Manage Saves' screen</span>
 	{/if}
-{/if}
-
-<Button on:click={exportCurrentSave} text="Export save #{$currentSave}"/>
-{#if exportString}
-	<h1>Copy the following text and save it somewhere</h1>
-	<span>{exportString}</span>
+{:else if currentFunction == "export"}
+		<h1>Copy the following text and save it somewhere</h1>
+		<span>{exportString}</span>
 {/if}

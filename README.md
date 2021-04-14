@@ -9,6 +9,7 @@ A tool I'm building to help an artist design rituals
     + Start with json objects in server memory (let's skip this and go straight to mongo)
     + Set up MongoDB as a database
     + Transform data mutation logic to MongoDB
+- [Implementing a Finite State Machine](https://codechips.me/svelte-and-robot-fsm/). Might be helpful if the UI gets more complex.
 
 ## Svelte Resources
 - [Cheatsheet](https://sveltesociety.dev/cheatsheet/)
