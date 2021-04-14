@@ -12,7 +12,7 @@
 	}
 </script>
 
-<Button on:click={showPopupLong} text="See saved designs"></Button>
+<Button on:click={showPopupLong} text="Manage Saves"></Button>
 
 <style>
 </style>

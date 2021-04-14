@@ -8,7 +8,6 @@
 
   export let message
 
-  console.log('popup loaded with', $savedDesigns)
   let selectedId
 
   function createNewDesign(){

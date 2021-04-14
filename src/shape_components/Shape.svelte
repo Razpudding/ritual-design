@@ -12,14 +12,15 @@
 </script>
 
 <input 
-	draggable="true"
 	id = {shapeData.id}
+  bind:value={shapeData.text}
+  draggable="true"
 	class='shape'
 	class:positioned={shapeData.slot !== null}
 	class:rotate={shapeData.rotated}
 	class:whiteText={textColor(shapeData.color)}
 	on:dragstart={dragstart} 
-	bind:value={shapeData.text}
+	
 	style="--bg: {shapeData.color}"
 	on:change="{e => shapeData.text = shapeData.text}" 
 	autocomplete="off"
