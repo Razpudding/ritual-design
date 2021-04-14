@@ -26,11 +26,13 @@
 <div
   on:drop={handleDragDrop} 
   on:dragover={handleDragOver}
+  class="btn"
   >Remove Shape
 </div>
 
 <style>
   div {
+    display:inline-block;
     width: 5em;
     margin: auto;
     color:#444;
@@ -40,8 +42,7 @@
     vertical-align:middle;
     padding: 5px;
     text-align: center;
-    position: absolute;
-    bottom: 1em;
-    left: 50%;
+    right: 40%;
+    position:absolute;
   }
 </style>

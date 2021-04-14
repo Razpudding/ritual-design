@@ -18,7 +18,6 @@
 		console.log(exportString)
 	}
 
-
 	function parseJSON (json){
     try {
       const result = JSON.parse(json)

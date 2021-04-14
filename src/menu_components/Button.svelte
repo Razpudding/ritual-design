@@ -6,6 +6,7 @@
 <div
   on:click
   class={optionalClass}
+  class:btn={true}
   >{text}
 </div>
 

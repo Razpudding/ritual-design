@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store'
+import { writable, derived } from 'svelte/store'
 
 export const shapes = writable([])
 
@@ -10,3 +10,5 @@ export const savedDesigns = writable([])
 export const currentSave = writable(0)
 
 export const centerText = writable('')
+
+export const maxSlotID = derived(slots, $slots =>  $slots.length > 0 ? Math.max(...$slots.map(s => s.id)) : 0)

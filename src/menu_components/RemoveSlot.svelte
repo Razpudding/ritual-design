@@ -18,6 +18,3 @@
 </script>
 
 <Button on:click={removeSlot($slots.length-1)} text="Remove slot"/>
-
-<style>
-</style>

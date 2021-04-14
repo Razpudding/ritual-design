@@ -13,14 +13,13 @@
 	import { shapes, slots, savedDesigns, currentSave, centerText } from './stores.js'
 	import SavedDesignsOverview from './save_screen/SavedDesignsOverview.svelte'
 	import ExportImportView from './export_import_screen/ExportImportView.svelte'
+	import BottomMenu from './menu_components/BottomMenu.svelte'
 	import Modal from 'svelte-simple-modal'
 	import Button from './menu_components/Button.svelte'
 	import Shape from './shape_components/Shape.svelte'
 	import Slot from './shape_components/Slot.svelte'
 	import CenterSlot from './shape_components/CenterSlot.svelte'
 	import Dropdown from './menu_components/Dropdown.svelte'
-	import RemoveShape from './menu_components/RemoveShape.svelte'
-	import DeleteSlot from './menu_components/RemoveSlot.svelte'
 	import {loadData, generateText} from './helpers/wordDataHandler.js'
 
 	if ($savedDesigns.length == 0){
@@ -44,7 +43,6 @@
 
 	//Create a new shape if the last shape is already placed in a slot
 	$: if($shapes.length == 0 || $shapes[$shapes.length -1].slot != null) { freshShape() }
-	$: maxSlotID = $slots.length > 0 ? Math.max(...$slots.map(s => s.id)) : 0
 	$: maxShapeID = Math.max(...$shapes.map(s => s.id))
 
 	//Create a fresh shape and add it to the shapes store
@@ -94,13 +92,6 @@
 			save.title = $centerText
 			console.log("Saving element data", save)
 		}
-	}
-	
-	function resetElementData(){
-		console.log("Resetting element data")	
-		$shapes = []
-		$slots = []
-		$centerText = 'New Design'
 	}
 
 	//Load the word data and set variables
@@ -165,12 +156,7 @@
 		{/each}
 		<CenterSlot bind:this={centerSlot}/>
 	</div>
-	<div class='UIComponents'>
-		<RemoveShape/>
-		<Button on:click="{() => $slots=$slots.concat({id:maxSlotID +1, shape:null})}" text="Add slot"/>
-		<DeleteSlot/>
-		<Button on:click={resetElementData} text="Start from scratch"/>
-	</div>
+	<BottomMenu/>
 </section>
 
 <style>
@@ -209,6 +195,7 @@
   .w25 {
   	width: 25%;
   }
+
 	#colorPicker {
 		padding: 0;
 		margin: 0;
