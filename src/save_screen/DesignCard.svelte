@@ -9,8 +9,6 @@
 
 <style>
 	div {
-		display:inline-block;
-		margin: 1em;
 		background-color: lightgreen
 	}
 </style>

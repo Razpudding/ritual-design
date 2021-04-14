@@ -41,7 +41,12 @@
 
 <ul>
 	{#each $savedDesigns as item (item.id)}
-		<DesignCard {item} on:click={()=>{selectedId = item.id}}/>
+    <div class:selected="{selectedId == item.id}">
+		<DesignCard 
+      {item} 
+      on:click={()=>{selectedId = item.id}}
+      />
+    </div>
 	{/each}
 </ul>
 
@@ -56,4 +61,13 @@
 		font-size: 2rem;
 		text-align: center;
 	}
+
+  div {
+    display: inline-block;
+    margin: 1em;
+  }
+
+  .selected{
+    border: green 3px dotted;
+  }
 </style>
