@@ -18,8 +18,23 @@
 		console.log(exportString)
 	}
 
+
+	function parseJSON (json){
+    try {
+      const result = JSON.parse(json)
+
+      if (result && typeof result === "object") {
+        return result
+      }
+    }
+    catch (e) {
+    	console.log("Error parsing JSON", e)
+    }
+    return false
+	}
+
 	function loadSaveData(){
-		const inputData = JSON.parse(inputString)
+		const inputData = parseJSON(inputString)
 
 		//TODO add XSS protection through escaping of special chars, add better input validation to make sure the save is not malformed
 		if (inputData.shapes && inputData.slots && inputData.title !== undefined){
