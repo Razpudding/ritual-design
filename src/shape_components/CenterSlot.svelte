@@ -1,5 +1,6 @@
 <script>
   import { shapes, centerText } from '../stores.js'
+  export let disabled = false
 
   function handleDragDrop(e) {
     console.log(e)
@@ -24,6 +25,7 @@
     rows='7'
     type=text
     bind:value={$centerText}
+    disabled={disabled} 
   />
 </div>
 

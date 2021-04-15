@@ -10,6 +10,10 @@
 
   let selectedId
 
+
+  //TODO: remove this after fixing bug
+  console.log("Loading popup with savedDesigns", $savedDesigns)
+
   function createNewDesign(){
     const maxID = Math.max(...$savedDesigns.map(s => s.id))
     $savedDesigns = $savedDesigns.concat({id:maxID + 1, title:'New Design', shapes:[], slots:[]})
@@ -42,10 +46,10 @@
 <ul>
 	{#each $savedDesigns as item (item.id)}
     <div class:selected="{selectedId == item.id}">
-		<DesignCard 
-      {item} 
-      on:click={()=>{selectedId = item.id}}
-      />
+  		<DesignCard 
+        {item} 
+        on:click={()=>{selectedId = item.id}}
+        />
     </div>
 	{/each}
 </ul>

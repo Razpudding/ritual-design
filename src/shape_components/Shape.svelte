@@ -1,6 +1,10 @@
 <script>
 	import fontColorContrast from 'font-color-contrast'
-	export let shapeData 
+	export let shapeData
+  export let draggable = true
+  export let disabled = false
+  export let fontSize = "1.2em"
+
 	function dragstart(ev) {
   	// Add the target element's id to the data transfer object
   	ev.dataTransfer
@@ -14,27 +18,29 @@
 <input 
 	id = {shapeData.id}
   bind:value={shapeData.text}
-  draggable="true"
+  draggable={draggable}
+  disabled={disabled}
 	class='shape'
 	class:positioned={shapeData.slot !== null}
 	class:rotate={shapeData.rotated}
 	class:whiteText={textColor(shapeData.color)}
 	on:dragstart={dragstart} 
 	
-	style="--bg: {shapeData.color}"
+	style="--bg: {shapeData.color}; --fs: {fontSize}"
 	on:change="{e => shapeData.text = shapeData.text}" 
 	autocomplete="off"
 >
 
 <style>
-  .shape {
+  .shape, .shape:disabled {
     background-color: var(--bg);
     border-bottom: #DFBC6A 1px solid;
     padding: .3em;
-    font-size: 1.2em;
+    font-size: var(--fs);
     text-align: center;
     box-shadow: 2px 2px 2px #999;
     cursor: move;
+    color: black;
   }
 
   .triangle {
@@ -54,7 +60,7 @@
 		transform: rotate(-180deg);
   }
 
-  .whiteText {
+  .whiteText, .whiteText:disabled {
   	color: white;
   }
 </style>
