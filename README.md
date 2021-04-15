@@ -10,6 +10,8 @@ A tool I'm building to help an artist design rituals
     + Set up MongoDB as a database
     + Transform data mutation logic to MongoDB
 - [Implementing a Finite State Machine](https://codechips.me/svelte-and-robot-fsm/). Might be helpful if the UI gets more complex.
+- [Rendering html to image options](https://stackoverflow.com/questions/10721884/render-html-to-an-image)
+- [Scaling collection of html elements using css scale](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale())
 
 ## Svelte Resources
 - [Cheatsheet](https://sveltesociety.dev/cheatsheet/)

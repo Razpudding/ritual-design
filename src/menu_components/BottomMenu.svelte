@@ -4,8 +4,6 @@
 
 	import { slots, shapes, centerText, maxSlotID } from '../stores.js'
 
-	// $: maxSlotID = $slots.length > 0 ? Math.max(...$slots.map(s => s.id)) : 0
-	console.log($maxSlotID)
 	function resetElementData(){
 		console.log("Resetting element data")	
 		$shapes = []
@@ -36,6 +34,10 @@
 </div>
 
 <style>
+	* {
+		padding: 1em;
+	}
+
   .UIComponents {
   	position: fixed;
   	bottom:0;
