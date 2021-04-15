@@ -54,10 +54,10 @@
 	{/each}
 </ul>
 
-{#if selectedId == undefined}
-  <Button on:click={createNewDesign} text='New Design'/>
-{:else}
-	<Button on:click={loadDesign} text='Load Design'/>
+
+<Button on:click={createNewDesign} text='New Design'/>
+{#if selectedId !== undefined}
+	<Button on:click={loadDesign} text='Load Design' optionalClass={'float-right'}/>
 {/if}
 
 <style>
