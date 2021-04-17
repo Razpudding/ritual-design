@@ -16,9 +16,9 @@
     width: min-content;
     margin: auto;
     color:#444;
-    border:1px solid #CCC;
+    border:1px solid black;
     cursor: pointer;
-    background:#DDD;
+    background:#eeeff2;
     box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
     vertical-align:middle;
     padding: 5px;

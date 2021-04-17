@@ -32,7 +32,7 @@
 	for (let i = 0; i < 5; i ++){
 		$slots.push({ id: i+1, shape: null })
 	}
-	let shapeColor = '#fddb5d'
+	let shapeColor = '#942192'
 	$shapes.push({	type: 'rect', id: 0, slot: null, text:"", rotated:false, color:shapeColor })
 	let categories = []
 	let words = [[]]
@@ -109,36 +109,6 @@
 	})
 </script>
 
-<section class='menu'>
-	<Dropdown
-		title='Category'
-		options={categories}
-		on:selection={changeCategory}
-		id='dropdownCat'
-	/>
-	<Button on:click={() => randomOption("dropdownCat")} text="🔀" optionalClass="float-right"/>
-	<Dropdown
-		title='Word'
-		options={words[currentCategory]}
-		on:selection={changeWord}
-		id='dropdownWord'
-	/>
-	<Button on:click={() => randomOption("dropdownWord")} text="🔀" optionalClass="float-right"/>
-	<h1 class='clearBoth'>Shape</h1>
-	<Shape
-		shapeData={$shapes.filter(s => s.slot === null)[0]}
-	/>
-  <input type="color" id="colorPicker" class='float-right w25' name="color picker" value="#fddb5d"
-  	on:input={e => $shapes[$shapes.length-1].color = e.target.value}>
-	<Button on:click={saveElementData} text="Save design #{$currentSave}"/>
-	<Modal>
-		<SavedDesignsOverview/>
-	</Modal>
-	<Modal>
-		<ExportImportView/>
-	</Modal>
-</section>
-
 <section class='content'>
 	<div class='slotsContainer'>
 		{#each $slots as slot, i (slot.id)}
@@ -159,7 +129,46 @@
 	<BottomMenu/>
 </section>
 
+<section class='menu'>
+	<Dropdown
+		title='Category'
+		options={categories}
+		on:selection={changeCategory}
+		id='dropdownCat'
+	/>
+	<Button on:click={() => randomOption("dropdownCat")} text="🔀" optionalClass="float-right"/>
+	<Dropdown
+		title='Word'
+		options={words[currentCategory]}
+		on:selection={changeWord}
+		id='dropdownWord'
+	/>
+	<Button on:click={() => randomOption("dropdownWord")} text="🔀" optionalClass="float-right"/>
+	<h1 class='clearBoth'>Shape</h1>
+	<Shape
+		shapeData={$shapes.filter(s => s.slot === null)[0]}
+	/>
+  <input type="color" id="colorPicker" class='float-right w25' name="color picker" value="#942192"
+  	on:input={e => $shapes[$shapes.length-1].color = e.target.value}>
+	<Button on:click={saveElementData} text="Save design #{$currentSave}"/>
+	<Modal>
+		<SavedDesignsOverview/>
+	</Modal>
+	<Modal>
+		<ExportImportView/>
+	</Modal>
+</section>
+
 <style>
+	* {
+		font-family: Verdana;
+	}
+
+	h1 {
+		font-family: Verdana;
+		font-weight: 300;
+	}
+
 	.menu {
 		height: 100%;
 		width: 25%;
@@ -167,7 +176,7 @@
 		z-index: 1;
 		top: 0;
 		left: 0;
-		background-color: lightgreen; 
+		background-color: #76c7da; 
 		overflow-x: hidden;
 		padding-top: 10%;
 		padding-left: 1em;

@@ -70,9 +70,10 @@
     left: 30%;
     height: 3em;
     width: 20%;
+    z-index: 1;
   }
 
   .filled {
-    background-color: #faa;
+    border: none;
   }
 </style>

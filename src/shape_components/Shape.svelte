@@ -34,11 +34,10 @@
 <style>
   .shape, .shape:disabled {
     background-color: var(--bg);
-    border-bottom: #DFBC6A 1px solid;
+    border: 1px solid black;
     padding: .3em;
     font-size: var(--fs);
     text-align: center;
-    box-shadow: 2px 2px 2px #999;
     cursor: move;
     color: black;
   }

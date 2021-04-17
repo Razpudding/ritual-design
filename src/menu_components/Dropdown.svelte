@@ -24,10 +24,24 @@
 </div>
 
 <style>
+  h1 {
+    font-family: Verdana;
+    font-weight: 300;
+  }
+
   select {
     float: left;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    font-size: larger;
+    color: darkslateblue;
+    font-weight: 400;
+    font-style: italic;
+    border-bottom: 1px solid darkslateblue;
+    -webkit-appearance:none;
   }
   .clearBoth {
-    clear:both;
+    clear: both;
   }
 </style>

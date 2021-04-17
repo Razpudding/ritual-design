@@ -74,6 +74,6 @@
   }
 
   .selected{
-    border: green 3px dotted;
+    border: darkslateblue 3px dotted;
   }
 </style>

@@ -13,6 +13,8 @@
 </script>
 
 <div class='wrapper' on:click>
+	<h2>#{item.id}</h2>
+	<span>{item.title}</span>
 	{#if (item.slots.length > 0 && item.shapes.length >0) }
 	<div class='slotsContainer'>
 		{#each item.slots as slot, i (slot.id)}
@@ -31,22 +33,19 @@
 				{/if}
 			</Slot>
 		{/each}
-		<!-- <CenterSlot disabled={true}/> -->
 	</div>
 	{/if}
-	<h2>#{item.id}</h2>
-	<span>{item.title}</span>
 </div>
 
 <style>
 	.wrapper {
-		background-color: lightgreen;
+		background-color: #76c7da;
 		height:100%;
+		width: 100%;
 	}
 
 	.slotsContainer {
 		transform: scale(0.3);
 		transform-origin: left;
-		width: 100%;
 	}
 </style>

@@ -35,9 +35,9 @@
     display:inline-block;
     width: 5em;
     margin: auto;
-    color:#444;
+    color:#d14545;
     border:1px dotted #CCC;
-    background:#fc7a5d;
+    background:black;
     box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
     vertical-align:middle;
     padding: 5px;
