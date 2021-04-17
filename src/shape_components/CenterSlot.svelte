@@ -23,6 +23,7 @@
   >
   <textarea 
     rows='7'
+    maxlength='50'
     type=text
     bind:value={$centerText}
     disabled={disabled} 

@@ -8,7 +8,10 @@
 
   const { open } = getContext('simple-modal')
 	const showPopupLong = () => {
-		open(PopupLong, { message: "Choose a design to load from or save to" })
+		open(PopupLong, //Component
+			{ message: "Choose a design to load from or save to"}, //Props
+			{ styleWindow: { width: '90%' } } //Options
+		)	
 	}
 </script>
 
