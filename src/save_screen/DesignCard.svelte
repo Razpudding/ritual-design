@@ -12,8 +12,7 @@
 	}
 </script>
 
-<div on:click>
-	<!-- Let's test this. Approach works but would need a lot of custom styling -->
+<div class='wrapper' on:click>
 	{#if (item.slots.length > 0 && item.shapes.length >0) }
 	<div class='slotsContainer'>
 		{#each item.slots as slot, i (slot.id)}
@@ -32,20 +31,22 @@
 				{/if}
 			</Slot>
 		{/each}
-		<CenterSlot disabled={true}/>
+		<!-- <CenterSlot disabled={true}/> -->
 	</div>
 	{/if}
-	<!-- end of test -->
 	<h2>#{item.id}</h2>
 	<span>{item.title}</span>
 </div>
 
 <style>
-	div {
+	.wrapper {
 		background-color: lightgreen;
+		height:100%;
 	}
+
 	.slotsContainer {
 		transform: scale(0.3);
 		transform-origin: left;
+		width: 100%;
 	}
 </style>
