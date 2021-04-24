@@ -167,11 +167,6 @@
 		font-family: Verdana;
 	}
 
-	:global(body) {
-		background-image: url("../assets/sand.jpg");
-		/*background-repeat: no-repeat;*/
-	}
-
 	h1 {
 		font-family: Verdana;
 		font-weight: 300;
