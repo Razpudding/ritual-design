@@ -31,6 +31,7 @@
 
   select {
     float: left;
+    width: 75%;
     padding: 0;
     background-color: transparent;
     border: none;

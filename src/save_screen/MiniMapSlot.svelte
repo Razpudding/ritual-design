@@ -18,10 +18,10 @@
     display: block;
     background-color: #eee;
     border: #999 1px dashed;
-    transform: rotate(var(--rot)) translateX(-50%);
+    transform: rotate(var(--rot)) translateX(-20%);
     transform-origin: center right;
     position: absolute;
-    height: 5em;
+    height: 3em;
     width: 100%;
     left: 50%;
     top: 70%;

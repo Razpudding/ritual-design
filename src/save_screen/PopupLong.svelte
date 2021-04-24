@@ -4,12 +4,10 @@
   import Button from '../menu_components/Button.svelte'
   import { shapes, slots, savedDesigns, currentSave, centerText } from '../stores.js'
 
-  const { close } = getContext('simple-modal')
-
   export let message
 
+  const { close } = getContext('simple-modal')
   let selectedId
-
 
   //TODO: remove this after fixing bug
   console.log("Loading popup with savedDesigns", $savedDesigns)

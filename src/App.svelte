@@ -10,7 +10,7 @@
 	*		Styling: Circle needs a height setting to work prop. That means the containing div(slot container) needs 100% height but that causes the slot container to be higher than the page causing other issues.
 	*/
 	import { onMount } from 'svelte'
-	import { shapes, slots, savedDesigns, currentSave, centerText } from './stores.js'
+	import { shapes, slots, savedDesigns, currentSave, centerText, fontSizeMod } from './stores.js'
 	import SavedDesignsOverview from './save_screen/SavedDesignsOverview.svelte'
 	import ExportImportView from './export_import_screen/ExportImportView.svelte'
 	import BottomMenu from './menu_components/BottomMenu.svelte'
@@ -147,6 +147,7 @@
 	<h1 class='clearBoth'>Shape</h1>
 	<Shape
 		shapeData={$shapes.filter(s => s.slot === null)[0]}
+		type="menu"
 	/>
   <input type="color" id="colorPicker" class='float-right w25' name="color picker" value="#942192"
   	on:input={e => $shapes[$shapes.length-1].color = e.target.value}>
@@ -157,11 +158,18 @@
 	<Modal>
 		<ExportImportView/>
 	</Modal>
+	<Button on:click={() => $fontSizeMod += .1} text='+ text size'/>
+	<Button on:click={() => $fontSizeMod -= .1} text='- text size'/>
 </section>
 
 <style>
 	* {
 		font-family: Verdana;
+	}
+
+	:global(body) {
+		background-image: url("../assets/sand.jpg");
+		/*background-repeat: no-repeat;*/
 	}
 
 	h1 {

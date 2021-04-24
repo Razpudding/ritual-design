@@ -26,9 +26,10 @@
 				{#if item.shapes.find(s => s.slot == slot.id)}
 					<Shape 
 						shapeData={item.shapes.find(s => s.slot == slot.id)}
+						type="minimap"
 						draggable={false}
 						disabled={true}
-						fontSize={"4em"}
+						fontSize={"2em"}
 					/>
 				{/if}
 			</Slot>
