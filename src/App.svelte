@@ -39,8 +39,6 @@
 	let currentCategory = 0
 	let currentWord = ''
 
-	let centerSlot
-
 	//Create a new shape if the last shape is already placed in a slot
 	$: if($shapes.length == 0 || $shapes[$shapes.length -1].slot != null) { freshShape() }
 	$: maxShapeID = Math.max(...$shapes.map(s => s.id))
@@ -85,7 +83,6 @@
 			console.log("no save found for this id", $currentSave)
 		}
 		else {
-			console.log(centerSlot)
 			//make a deep copy of each array. it contains objects so a shallow copy wont work
 			save.shapes = $shapes.map(s => ({...s}))
 			save.slots = $slots.map(s => ({...s}))
@@ -124,7 +121,7 @@
 				{/if}
 			</Slot>
 		{/each}
-		<CenterSlot bind:this={centerSlot}/>
+		<CenterSlot/>
 	</div>
 	<BottomMenu/>
 </section>
@@ -150,7 +147,7 @@
 		type="menu"
 	/>
   <input type="color" id="colorPicker" class='float-right w25' name="color picker" value="#942192"
-  	on:input={e => $shapes[$shapes.length-1].color = e.target.value}>
+  	on:input={e => $shapes[$shapes.length-1].color = shapeColor = e.target.value}>
 	<Button on:click={saveElementData} text="Save design #{$currentSave}"/>
 	<Modal>
 		<SavedDesignsOverview/>
@@ -165,6 +162,10 @@
 <style>
 	* {
 		font-family: Verdana;
+	}
+
+	:global(body) {
+		background-color: #e1ecec;
 	}
 
 	h1 {
