@@ -49,7 +49,7 @@
 	}
 
 	.slotsContainer {
-		transform: scale(var(--ds));
+		transform: scale(var(--ds)) translateX(80%);
 		transform-origin: left;
 	}
 </style>

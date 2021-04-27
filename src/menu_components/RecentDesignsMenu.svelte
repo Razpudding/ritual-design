@@ -41,10 +41,11 @@
 		position: absolute;
 		z-index: 1;
 		top: 0;
-		right:-20%;
-		width: 20%;
+		right:-15%;
+		width: 15%;
 		background-color: #76c7da;
 		padding-left: 1em;
+		transition: all .5s;
 	}
 	.menuContainer:hover {
 		right: 0%;
