@@ -163,25 +163,21 @@
 	<Button on:click={() => $fontSizeMod -= .1} text='- text size'/>
 </section>
 
-<section class='recentDesigns'>
-	<RecentDesignsMenu/>
-</section>
+<RecentDesignsMenu/>
 
 <style>
 	* {
 		font-family: Verdana;
 	}
-
 	:global(body) {
 		background-color: #e1ecec;
 	}
-
 	h1 {
 		font-family: Verdana;
 		font-weight: 300;
 	}
 
-	.editorMenu, .recentDesigns {
+	.editorMenu {
 		height: 100%;
 		position: absolute;
 		z-index: 1;
@@ -196,10 +192,6 @@
 		left: 0;
 		padding-top: 10%;
 		width: 25%;
-	}
-	.recentDesigns {
-		left: 80%;
-		width: 20%;
 	}
 	.content {
 		width: 70%;

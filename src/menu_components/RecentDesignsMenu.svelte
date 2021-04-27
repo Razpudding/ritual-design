@@ -23,19 +23,32 @@
 	}
 </script>
 
-
+<section class="menuContainer">
 	{#each $savedDesigns as item (item.id)}
 	<div class="cardContainer">
 		<DesignCard
 	    {item}
 	    on:click={()=>{loadDesign(item.id)}}
-	    designSize={.3}
+	    designSize={.2}
 	    />
 	</div>
 	{/each}
-
+</section>
 
 <style>
+	.menuContainer {
+		height: 100%;
+		position: absolute;
+		z-index: 1;
+		top: 0;
+		right:-20%;
+		width: 20%;
+		background-color: #76c7da;
+		padding-left: 1em;
+	}
+	.menuContainer:hover {
+		right: 0%;
+	}
 	.cardContainer {
 		height: 8.5em;
 		list-style-type: none;
