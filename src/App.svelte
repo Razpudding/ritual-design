@@ -148,13 +148,15 @@
 	/>
   <input type="color" id="colorPicker" class='float-right w25' name="color picker" value="#942192"
   	on:input={e => $shapes[$shapes.length-1].color = shapeColor = e.target.value}>
-	<Button on:click={saveElementData} text="Save design #{$currentSave}"/>
-	<Modal>
-		<SavedDesignsOverview/>
-	</Modal>
-	<Modal>
-		<ExportImportView/>
-	</Modal>
+  <div>
+		<Button on:click={saveElementData} text="Save design #{$currentSave}"/>
+		<Modal>
+			<SavedDesignsOverview/>
+		</Modal>
+		<Modal>
+			<ExportImportView/>
+		</Modal>
+	</div>
 	<Button on:click={() => $fontSizeMod += .1} text='+ text size'/>
 	<Button on:click={() => $fontSizeMod -= .1} text='- text size'/>
 </section>

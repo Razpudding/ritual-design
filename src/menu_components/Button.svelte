@@ -3,40 +3,23 @@
   export let optionalClass = ''
 </script>
 
-<div
+<button
   on:click
   class={optionalClass}
-  class:btn={true}
-  class:unselectable={true}
   >{text}
-</div>
+</button>
 
 <style>
-  div {
+  button {
     min-width: 3em;
-    width: min-content;
-    margin: auto;
     color:#444;
     border:1px solid black;
     cursor: pointer;
     background:#eeeff2;
-    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
-    vertical-align:middle;
     padding: 5px;
-    text-align: center;
-    position: relative;
-    display:inline-block;
   }
 
   .float-right {
     float: right;
-  }
-
-  .unselectable {
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -o-user-select: none;
-    user-select: none;
   }
 </style>
