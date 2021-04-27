@@ -4,6 +4,7 @@
 	import CenterSlot from '../shape_components/CenterSlot.svelte'
 
 	export let item
+	export let designSize = 0.3
 
 	if (item.slots.length > 0 && item.shapes.length >0){
 		console.log("rendering minimap", item)
@@ -16,7 +17,9 @@
 	<h2>#{item.id}</h2>
 	<span>{item.title}</span>
 	{#if (item.slots.length > 0 && item.shapes.length >0) }
-	<div class='slotsContainer'>
+	<div 
+		class='slotsContainer'
+		style="--ds: {designSize}">
 		{#each item.slots as slot, i (slot.id)}
 			<Slot
 				slotData={slot}
@@ -40,13 +43,13 @@
 
 <style>
 	.wrapper {
-		background-color: #76c7da;
+		background-color: #749198;
 		height:100%;
 		width: 100%;
 	}
 
 	.slotsContainer {
-		transform: scale(0.3);
+		transform: scale(var(--ds));
 		transform-origin: left;
 	}
 </style>

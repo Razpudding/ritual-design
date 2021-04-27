@@ -39,7 +39,7 @@
 		if (inputData.shapes && inputData.slots && inputData.title !== undefined){
 			console.log("Valid data, loading into store")
 			newSaveID = ($savedDesigns.length > 0 ? Math.max(...$savedDesigns.map(s => s.id)) : 0) + 1
-			$savedDesigns.push({
+			$savedDesigns = $savedDesigns.concat({
 				id: newSaveID,
 				shapes: inputData.shapes,
 				slots: inputData.slots,

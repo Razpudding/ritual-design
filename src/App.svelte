@@ -12,6 +12,7 @@
 	import { onMount } from 'svelte'
 	import { shapes, slots, savedDesigns, currentSave, centerText, fontSizeMod } from './stores.js'
 	import SavedDesignsOverview from './save_screen/SavedDesignsOverview.svelte'
+	import RecentDesignsMenu from './menu_components/RecentDesignsMenu.svelte'
 	import ExportImportView from './export_import_screen/ExportImportView.svelte'
 	import BottomMenu from './menu_components/BottomMenu.svelte'
 	import Modal from 'svelte-simple-modal'
@@ -88,6 +89,7 @@
 			save.slots = $slots.map(s => ({...s}))
 			save.title = $centerText
 			console.log("Saving element data", save)
+			$savedDesigns = $savedDesigns
 		}
 	}
 
@@ -126,7 +128,7 @@
 	<BottomMenu/>
 </section>
 
-<section class='menu'>
+<section class='editorMenu'>
 	<Dropdown
 		title='Category'
 		options={categories}
@@ -148,7 +150,7 @@
 	/>
   <input type="color" id="colorPicker" class='float-right w25' name="color picker" value="#942192"
   	on:input={e => $shapes[$shapes.length-1].color = shapeColor = e.target.value}>
-  <div>
+  <section>
 		<Button on:click={saveElementData} text="Save design #{$currentSave}"/>
 		<Modal>
 			<SavedDesignsOverview/>
@@ -156,9 +158,13 @@
 		<Modal>
 			<ExportImportView/>
 		</Modal>
-	</div>
+	</section>
 	<Button on:click={() => $fontSizeMod += .1} text='+ text size'/>
 	<Button on:click={() => $fontSizeMod -= .1} text='- text size'/>
+</section>
+
+<section class='recentDesigns'>
+	<RecentDesignsMenu/>
 </section>
 
 <style>
@@ -175,19 +181,25 @@
 		font-weight: 300;
 	}
 
-	.menu {
+	.editorMenu, .recentDesigns {
 		height: 100%;
-		width: 25%;
 		position: absolute;
 		z-index: 1;
 		top: 0;
-		left: 0;
 		background-color: #76c7da; 
 		overflow-x: hidden;
-		padding-top: 10%;
 		padding-left: 1em;
 		padding-right: 1em;
 		clear: left;
+	}
+	.editorMenu {
+		left: 0;
+		padding-top: 10%;
+		width: 25%;
+	}
+	.recentDesigns {
+		left: 80%;
+		width: 20%;
 	}
 	.content {
 		width: 70%;
