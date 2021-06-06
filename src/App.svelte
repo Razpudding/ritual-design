@@ -19,6 +19,7 @@
 	import Button from './menu_components/Button.svelte'
 	import Shape from './shape_components/Shape.svelte'
 	import Slot from './shape_components/Slot.svelte'
+	import StatusText from './menu_components/StatusText.svelte'
 	import CenterSlot from './shape_components/CenterSlot.svelte'
 	import Dropdown from './menu_components/Dropdown.svelte'
 	import {loadData, generateText} from './helpers/wordDataHandler.js'
@@ -39,6 +40,7 @@
 	let words = [[]]
 	let currentCategory = 0
 	let currentWord = ''
+	let status =''
 
 	//Create a new shape if the last shape is already placed in a slot
 	$: if($shapes.length == 0 || $shapes[$shapes.length -1].slot != null) { freshShape() }
@@ -90,6 +92,7 @@
 			save.title = $centerText
 			console.log("Saving element data", save)
 			$savedDesigns = $savedDesigns
+			status = 'Design '+ save.id + ' saved'
 		}
 	}
 
@@ -161,6 +164,7 @@
 	</section>
 	<Button on:click={() => $fontSizeMod += .1} text='+ text size'/>
 	<Button on:click={() => $fontSizeMod -= .1} text='- text size'/>
+	<StatusText text={status}/>
 </section>
 
 <RecentDesignsMenu/>

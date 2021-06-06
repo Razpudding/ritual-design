@@ -10,7 +10,7 @@ A tool I'm building to help an artist design rituals
     + Set up MongoDB as a database
     + Transform data mutation logic to MongoDB
 - [Implementing a Finite State Machine](https://codechips.me/svelte-and-robot-fsm/). Might be helpful if the UI gets more complex.
-- Looked into auto resizing all text when one text outgrows its container. Long story short, it's very tricky (especially with cross-browser and machine support). Best faalback is prob to allow user to rescale all text with '+' and '-' buttons.
+- [Svelte NPM package for auto resizing font](https://github.com/micha-lmxt/svelte-textfit). 
 
 ## Svelte Resources
 - [Cheatsheet](https://sveltesociety.dev/cheatsheet/)
