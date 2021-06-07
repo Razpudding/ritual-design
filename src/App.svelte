@@ -9,8 +9,11 @@
 	* BUGS:
 	*		Styling: Circle needs a height setting to work prop. That means the containing div(slot container) needs 100% height but that causes the slot container to be higher than the page causing other issues.
 	*/
+	//SVELTE
 	import { onMount } from 'svelte'
-	import { shapes, slots, savedDesigns, currentSave, centerText, fontSizeMod } from './stores.js'
+	//STORE
+	import { shapes, slots, savedDesigns, currentSave, centerText, fontSizeMod, status } from './stores.js'
+	//COMPONENTS
 	import SavedDesignsOverview from './save_screen/SavedDesignsOverview.svelte'
 	import RecentDesignsMenu from './menu_components/RecentDesignsMenu.svelte'
 	import ExportImportView from './export_import_screen/ExportImportView.svelte'
@@ -22,6 +25,7 @@
 	import StatusText from './menu_components/StatusText.svelte'
 	import CenterSlot from './shape_components/CenterSlot.svelte'
 	import Dropdown from './menu_components/Dropdown.svelte'
+	//HELPERS
 	import {loadData, generateText} from './helpers/wordDataHandler.js'
 
 	if ($savedDesigns.length == 0){
@@ -40,7 +44,6 @@
 	let words = [[]]
 	let currentCategory = 0
 	let currentWord = ''
-	let status =''
 
 	//Create a new shape if the last shape is already placed in a slot
 	$: if($shapes.length == 0 || $shapes[$shapes.length -1].slot != null) { freshShape() }
@@ -92,7 +95,7 @@
 			save.title = $centerText
 			console.log("Saving element data", save)
 			$savedDesigns = $savedDesigns
-			status = 'Design '+ save.id + ' saved'
+			$status = 'Design '+ save.id + ' saved'
 		}
 	}
 
@@ -164,7 +167,7 @@
 	</section>
 	<Button on:click={() => $fontSizeMod += .1} text='+ text size'/>
 	<Button on:click={() => $fontSizeMod -= .1} text='- text size'/>
-	<StatusText text={status}/>
+	<StatusText/>
 </section>
 
 <RecentDesignsMenu/>
