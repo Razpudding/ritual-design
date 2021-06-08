@@ -96,7 +96,7 @@
 			save.title = $centerText
 			console.log("Saving element data", save)
 			$savedDesigns = $savedDesigns
-			$notifications = $notifications.concat({id: maxProperty($notifications, 'id'), text: 'Design '+ save.id + ' saved'})
+			$notifications = $notifications.concat({id: maxProperty($notifications, 'id')+1, text: 'Design '+ save.id + ' saved'})
 			console.log($notifications)
 		}
 	}
@@ -169,7 +169,7 @@
 	</section>
 	<Button on:click={() => $fontSizeMod += .1} text='+ text size'/>
 	<Button on:click={() => $fontSizeMod -= .1} text='- text size'/>
-	{#each $notifications as note, i (note.id)}
+	{#each $notifications as note (note.id)}
 		<StatusText note={note}/>
 	{/each}
 </section>
