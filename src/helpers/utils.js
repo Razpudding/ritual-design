@@ -3,7 +3,7 @@
 */
 
 //Provided an array of objects and a numerical property, return max value found
-//TODO: Add validation (numerical, non empty array)
+//TODO: Add validation (numerical)
 export function maxProperty(arrayOfObjects, property){ 
 	if (arrayOfObjects.length === 0){
 		return 0

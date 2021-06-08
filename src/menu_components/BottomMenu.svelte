@@ -1,8 +1,9 @@
 <script>
+	import { maxProperty } from '../helpers/utils.js'
 	import RemoveShape from './RemoveShape.svelte'
 	import Button from './Button.svelte'
 
-	import { slots, shapes, centerText, maxSlotID } from '../stores.js'
+	import { slots, shapes, centerText, maxSlotID, notifications } from '../stores.js'
 
 	function resetElementData(){
 		console.log("Resetting element data")	
@@ -21,6 +22,7 @@
 				index > 0 ? removeSlot(--index) : console.log("no slots are empty")
 			}
 		} else {
+			$notifications = $notifications.concat({id: maxProperty($notifications, 'id')+1, text: "Can't remove last available slot"})
 			console.log("can't remove last slot")
 		}
 	}

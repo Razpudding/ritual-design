@@ -1,5 +1,4 @@
 <script>
-	//TODO: On closing the popup, all state vars should be reset to false
 	import { getContext } from 'svelte'
 	import { shapes, slots, savedDesigns, currentSave, centerText } from '../stores.js'
 	import Button from '../menu_components/Button.svelte'
@@ -11,6 +10,7 @@
 	let inputString
 	let newSaveID
 	let loadedData
+	let error = ''
 
 	function exportCurrentSave(){
 		exportString = JSON.stringify($savedDesigns.find(save => save.id == $currentSave))
@@ -28,14 +28,17 @@
     }
     catch (e) {
     	console.log("Error parsing JSON", e)
+    	loadedData = false
+    	error = '1: Invalid json data: ' + e
     }
     return false
 	}
 
 	function loadSaveData(){
 		const inputData = parseJSON(inputString)
-
-		//TODO add XSS protection through escaping of special chars, add better input validation to make sure the save is not malformed
+		if (inputData === false){
+			return
+		}
 		if (inputData.shapes && inputData.slots && inputData.title !== undefined){
 			console.log("Valid data, loading into store")
 			newSaveID = ($savedDesigns.length > 0 ? Math.max(...$savedDesigns.map(s => s.id)) : 0) + 1
@@ -47,8 +50,13 @@
 			})
 			console.log($savedDesigns)
 			loadedData = true
+			error = ''
 		}
-		else { console.log("invalid save data", inputData)}
+		else { 
+			console.log("invalid save data", inputData)
+			loadedData = false
+			error = '2: Invalid save data'
+		}
 	}
 </script>
 
@@ -59,6 +67,9 @@
 	<h1>Paste data previously copied from this app here</h1>
 	<input type="text" bind:value={inputString}>
 	<Button on:click={loadSaveData} text="Load data"/>
+	{#if error}
+		<p>{error}</p>
+	{/if}
 	{#if loadedData}
 		<h1>Data has been saved as design {newSaveID}</h1>
 		<span>You can load this design in the 'Manage Saves' screen</span>

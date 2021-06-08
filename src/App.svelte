@@ -137,6 +137,7 @@
 </section>
 
 <section class='editorMenu'>
+	<h1>Design #{$currentSave}</h1>
 	<Dropdown
 		title='Category'
 		options={categories}
@@ -151,7 +152,7 @@
 		id='dropdownWord'
 	/>
 	<Button on:click={() => randomOption("dropdownWord")} text="🔀" optionalClass="float-right"/>
-	<h1 class='clearBoth'>Shape</h1>
+	<h2 class='clearBoth'>Shape</h2>
 	<Shape
 		shapeData={$shapes.filter(s => s.slot === null)[0]}
 		type="menu"
@@ -159,7 +160,7 @@
   <input type="color" id="colorPicker" class='float-right w25' name="color picker" value="#942192"
   	on:input={e => $shapes[$shapes.length-1].color = shapeColor = e.target.value}>
   <section>
-		<Button on:click={saveElementData} text="Save design #{$currentSave}"/>
+		<Button on:click={saveElementData} text="Save design"/>
 		<Modal>
 			<SavedDesignsOverview/>
 		</Modal>
@@ -183,7 +184,7 @@
 	:global(body) {
 		background-color: #e1ecec;
 	}
-	h1 {
+	h2 {
 		font-family: Verdana;
 		font-weight: 300;
 	}
