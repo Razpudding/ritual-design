@@ -12,7 +12,7 @@
 	//SVELTE
 	import { onMount } from 'svelte'
 	//STORE
-	import { shapes, slots, savedDesigns, currentSave, centerText, fontSizeMod, status } from './stores.js'
+	import { shapes, slots, savedDesigns, currentSave, centerText, fontSizeMod, notifications } from './stores.js'
 	//COMPONENTS
 	import SavedDesignsOverview from './save_screen/SavedDesignsOverview.svelte'
 	import RecentDesignsMenu from './menu_components/RecentDesignsMenu.svelte'
@@ -26,7 +26,8 @@
 	import CenterSlot from './shape_components/CenterSlot.svelte'
 	import Dropdown from './menu_components/Dropdown.svelte'
 	//HELPERS
-	import {loadData, generateText} from './helpers/wordDataHandler.js'
+	import { loadData, generateText} from './helpers/wordDataHandler.js'
+	import { maxProperty} from './helpers/utils.js'
 
 	if ($savedDesigns.length == 0){
 		$savedDesigns = [{id:0, title:'New Design', shapes:[], slots:[]}]
@@ -47,7 +48,7 @@
 
 	//Create a new shape if the last shape is already placed in a slot
 	$: if($shapes.length == 0 || $shapes[$shapes.length -1].slot != null) { freshShape() }
-	$: maxShapeID = Math.max(...$shapes.map(s => s.id))
+	$: maxShapeID = maxProperty($shapes, 'id')
 
 	//Create a fresh shape and add it to the shapes store
 	function freshShape(){
@@ -95,7 +96,8 @@
 			save.title = $centerText
 			console.log("Saving element data", save)
 			$savedDesigns = $savedDesigns
-			$status = 'Design '+ save.id + ' saved'
+			$notifications = $notifications.concat({id: maxProperty($notifications, 'id'), text: 'Design '+ save.id + ' saved'})
+			console.log($notifications)
 		}
 	}
 
@@ -167,7 +169,9 @@
 	</section>
 	<Button on:click={() => $fontSizeMod += .1} text='+ text size'/>
 	<Button on:click={() => $fontSizeMod -= .1} text='- text size'/>
-	<StatusText/>
+	{#each $notifications as note, i (note.id)}
+		<StatusText note={note}/>
+	{/each}
 </section>
 
 <RecentDesignsMenu/>
