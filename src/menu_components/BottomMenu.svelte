@@ -45,6 +45,6 @@
   	bottom:0;
 		width:100%;
 		height:10%;
-		background: #76c7da;
+		background: #76c7daa3;
   }
 </style>

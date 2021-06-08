@@ -182,7 +182,7 @@
 		font-family: Verdana;
 	}
 	:global(body) {
-		background-color: #e1ecec;
+		background-color: darkslategray;
 	}
 	h2 {
 		font-family: Verdana;
@@ -194,7 +194,7 @@
 		position: absolute;
 		z-index: 1;
 		top: 0;
-		background-color: #76c7da; 
+		background-color: #76c7daa3; 
 		overflow-x: hidden;
 		padding-left: 1em;
 		padding-right: 1em;

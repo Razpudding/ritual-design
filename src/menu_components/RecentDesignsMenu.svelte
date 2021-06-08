@@ -43,7 +43,7 @@
 		top: 0;
 		right:-15%;
 		width: 15%;
-		background-color: #76c7da;
+		background-color: #76c7daa3;
 		padding-left: 1em;
 		transition: all .5s;
 	}
