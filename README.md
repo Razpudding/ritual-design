@@ -11,6 +11,7 @@ A tool I'm building to help an artist design rituals
     + Transform data mutation logic to MongoDB
 - [Implementing a Finite State Machine](https://codechips.me/svelte-and-robot-fsm/). Might be helpful if the UI gets more complex.
 - [Svelte NPM package for auto resizing font](https://github.com/micha-lmxt/svelte-textfit). 
+- [Open source icons](https://www.reddit.com/r/Frontend/comments/hzikhc/550_customizable_size_color_stroke_opensource_svg/)
 
 ## Svelte Resources
 - [Cheatsheet](https://sveltesociety.dev/cheatsheet/)
