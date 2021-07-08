@@ -1,9 +1,9 @@
 # Manual for ritual design tool
 _How you can use this tool to design a ritual_
 
-Please note that this manual doesn't describe how to design a ritual in general. It merely explains how this tool can help you.
+Please note that this manual doesn't include a methodology for designing rituals, it only describes how to use the tool as a step in this process.
 
-![Overview of the tool](overview.png)
+![Overview of the tool](ritual_design_UI_labeled.png)
 
 ## Purpose
 This tool is designed to facilitate the process of designing rituals. It is the result of a collaboration between myself (Laurens) and an artist and ritual-maker. The tool helps the ritual maker visualize concepts which are relevant to the subject or subjects of the ritual.
