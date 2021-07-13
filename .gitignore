@@ -2,7 +2,7 @@
 /public/build/
 *.jpeg
 *.jpg
-
+!background.jpeg
 .DS_Store
 
 .vercel

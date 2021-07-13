@@ -182,7 +182,12 @@
 		font-family: Verdana;
 	}
 	:global(body) {
-		background-color: darkslategray;
+		background-image: url("/assets/background.jpeg");
+		background-repeat: no-repeat;
+		background-position:  right;
+		background-size: 1001px 1200px;
+		overflow: hidden;
+		/*background-color: darkslategray;*/
 	}
 	h2 {
 		font-family: Verdana;
